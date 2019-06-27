@@ -7,7 +7,7 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Узнать погоду"]]; //Клавиатура
+    $keyboard = [["Узнать погоду"],["Избранные города"]]; //Клавиатура
 
 
     if($text)
@@ -17,7 +17,6 @@
             if (strlen($name) != 0)
             {
                 $reply = "Добро пожаловать, ".$name."!";
-                
             }
             else
             {
@@ -25,6 +24,16 @@
             }
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+        }
+        elseif ($text == "/help")
+        {
+            $reply = "С помощью этого бота вы можете узнать погоду по всему миру";
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+        }
+        elseif ($text =="Узнать погоду")
+        {
+            $reply = "Введите название населенного пункта";
         }
     }
     echo "hello";

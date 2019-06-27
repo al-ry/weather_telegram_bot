@@ -17,6 +17,7 @@
             if (strlen($name) != 0)
             {
                 $reply = "Добро пожаловать, ".$name."!";
+                
             }
             else
             {

@@ -57,7 +57,7 @@
       $country = $get_arr['location']['country'];
       $discr = $get_arr['current']['condition']['text'];
       $cloud = $get_arr['current']['cloud'];
-      $pressureMb = $get_arr['current']['pressure_mb'];
+      $pressure = $get_arr['current']['pressure_mb'];
 
       if ($city = $get_arr['location']['name'])
       {
@@ -65,7 +65,7 @@
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%
-           -Pressure: " .$pressure. " Mb
+           -Pressure: " .$pressure / 1.333. " mb
            -Cloudiness: " .$cloud. "%";
       }
       else

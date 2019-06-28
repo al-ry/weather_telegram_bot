@@ -11,8 +11,9 @@
     $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
 
 //////////////tests
-   $country = "Yoshkar-Ola";
-   define ("link", "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$country");
+   $cit = "Yoshkar";
+   define ("link", "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$cit");
+   
     $weather_data = file_get_contents(link);
     $decode = json_decode($weather_data, true);
     var_dump($decode) ;
@@ -65,7 +66,22 @@
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
       $weather_data = file_get_contents($api);
       $get_arr = json_decode($weather_data, true);
-      $result = $get_arr['current']['temp_c'];
-      return 'Temperarute in ' .$city. " = " .$result. " C";
+      $temp_c = $get_arr['current']['temp_c'];
+      $feelslike_temp = $get_arr['current']['feelslike_c'];
+      $humidity = $get_arr['current']['humidity'];
+      $country = $get_arr['location']['country'];
+      $icon = $get_arr['current']['condition']['icon'];
+
+
+      if ($city = $get_arr['location']['name'])
+      {
+           return "The weather in " .$city. "(" .$country. "): \n \n
+                   Temperature is" .$temp_c. ", feels like " .$feelslike_temp;
+      }
+      else
+      {
+          return "The city is not found";
+      }
+
     }
 ?>

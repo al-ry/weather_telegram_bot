@@ -9,6 +9,19 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"]]; //Клавиатура
 
+//////////////tests
+   $country = "Yoshkar-Ola";
+   define ("link", "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$country");
+    $weather_data = file_get_contents(link);
+    $decode = json_decode($weather_data, true);
+    var_dump($decode) ;
+    function printArr($array){
+        echo '<pre> ' . print_r($array, true) . ' <pre>';
+    }
+    printArr($decode);
+    echo $decode['location']['name'];
+/////////////
+
 
     if($text)
     {
@@ -31,10 +44,20 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
         }
-        elseif ($text =="Узнать погоду")
+        elseif ($text =="Узнать прогноз")
         {
             $reply = "Введите название населенного пункта";
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
         }
+        
     }
-    echo "hello";
+
+    function getWeather($city){
+      $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
+      $weather_data = file_get_contents($api);
+      $get_arr = json_decode($weather_data, true);
+      $result = $get_arr['current']['temp_c'];
+      return 'Temperarute in' .$city. "=" .$result. "C";
+    }
 ?>

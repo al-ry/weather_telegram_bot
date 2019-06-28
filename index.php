@@ -48,11 +48,15 @@
         {
             $reply = "Введите название населенного пункта";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            if($text)
-            {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
-            }
         }
+        else
+        {
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
+        }
+    }
+    else
+    {
+    	$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
     }
     
 

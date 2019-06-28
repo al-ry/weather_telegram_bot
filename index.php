@@ -10,21 +10,6 @@
     $keyboard = [["Узнать погоду"],["Избранные города"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
 
-//////////////tests
-   $cit = "Yoshkar";
-   define ("link", "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$cit");
-   
-    $weather_data = file_get_contents(link);
-    $decode = json_decode($weather_data, true);
-    var_dump($decode) ;
-    function printArr($array){
-        echo '<pre> ' . print_r($array, true) . ' <pre>';
-    }
-    printArr($decode);
-    echo $decode['location']['name'];
-/////////////
-
-
     if($text)
     {
         if ($text == "/start")
@@ -73,6 +58,8 @@
       $discr = $get_arr['current']['condition']['text'];
       $cloud = $get_arr['current']['cloud'];
       $pressure = $get_arr['current']['pressure_mb'];
+      
+      define ("pressureMmHg", "$pressure/3");
 
       if ($city = $get_arr['location']['name'])
       {
@@ -80,7 +67,7 @@
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%
-           -Pressure: " .$pressure. "mmHg
+           -Pressure: " .pressureMmHg. " mmHg
            -Cloudiness: " .$cloud. "%";
 
       }

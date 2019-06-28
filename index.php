@@ -52,7 +52,8 @@
         }
         else
         {
-    
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'reply_markup' => $reply_markup ]);  
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
         }
     }

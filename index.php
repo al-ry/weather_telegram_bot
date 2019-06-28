@@ -26,7 +26,6 @@
 
     if($text)
     {
-        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
         if ($text == "/start")
         {
             if (strlen($name) != 0)

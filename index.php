@@ -70,14 +70,14 @@
       $feelslike_temp = $get_arr['current']['feelslike_c'];
       $humidity = $get_arr['current']['humidity'];
       $country = $get_arr['location']['country'];
-      $icon = $get_arr['current']['condition']['icon'];
+      $discr = $get_arr['current']['condition']['text'];
 
 
       if ($city = $get_arr['location']['name'])
       {
-           return "The weather in " .$city. "(" .$country. "): \n
+           return "The weather in " .$city. "(" .$country. "): 
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C \n
-           -Weather: " .$icon. "\n
+           -Weather: " .$discr. "\n
            -Humidity: " .$humidity;
       }
       else

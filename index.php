@@ -44,14 +44,17 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
         }
-        elseif ($text =="Узнать погоду")
+        elseif ($text == "Узнать погоду")
         {
             $reply = "Введите название населенного пункта";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
         }
-        
+        elseif ($text == "Moscow")
+        {
+          $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
+        }
     }
+    
 
     function getWeather($city){
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";

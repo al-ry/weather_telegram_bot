@@ -65,7 +65,7 @@
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%
-           -Pressure: " .floor($pressure % 1.333). " mmHg
+           -Pressure: " .floor($pressure / 1.333). " mmHg
            -Cloudiness: " .$cloud. "%";
       }
       else

@@ -51,10 +51,7 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
         else
-        {
-
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'reply_markup' => $reply_markup ]);  
+        { 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
         }
     }
@@ -69,6 +66,6 @@
       $weather_data = file_get_contents($api);
       $get_arr = json_decode($weather_data, true);
       $result = $get_arr['current']['temp_c'];
-      return 'Temperarute in ' .$city. "=" .$result. " C";
+      return 'Temperarute in ' .$city. " = " .$result. " C";
     }
 ?>

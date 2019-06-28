@@ -72,17 +72,16 @@
       $country = $get_arr['location']['country'];
       $icon = $get_arr['current']['condition']['icon'];
 
-
       if ($city = $get_arr['location']['name'])
       {
            return "The weather in " .$city. "(" .$country. "): \n \n
-                   Temperature is" .$temp_c. ", feels like " .$feelslike_temp "\n
-                   -Weather" .$icon. "\n
-                   -Humidity " .$humidity
+            -Temperature is " .$temp_c. ", feels like " .$feelslike_temp "\n
+            -Weather " .$icon. "\n
+            -Humidity " .$humidity
       }
       else
       {
-          return "The city is not found";
+          return "The city is not found"
       }
 
     }

@@ -44,7 +44,7 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
         }
-        elseif ($text =="Узнать прогноз")
+        elseif ($text =="Узнать погоду")
         {
             $reply = "Введите название населенного пункта";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);

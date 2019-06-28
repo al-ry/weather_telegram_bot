@@ -53,7 +53,7 @@
         }
         else
         { 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getWeather($text)]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
         }
     }
     else
@@ -62,7 +62,7 @@
     }
     
 
-    function getWeather($city){
+    function getCurrentWeather($city){
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
       $weather_data = file_get_contents($api);
       $get_arr = json_decode($weather_data, true);
@@ -75,13 +75,12 @@
 
       if ($city = $get_arr['location']['name'])
       {
-           return "The weather in " .$city. "(" .$country. "): \n \n
-                Temperature is" .$temp_c. ", feels like " .$feelslike_temp;
+           return "The weather in " .$city. "(" .$country. "): \n
+            -Temperature: " .$temp_c. ", feels like " .$feelslike_temp;
       }
       else
       {
           return "The city is not found";
       }
-
     }
 ?>

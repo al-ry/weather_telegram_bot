@@ -59,15 +59,13 @@
       $cloud = $get_arr['current']['cloud'];
       $pressure = $get_arr['current']['pressure_mb'];
       
-      define ("pressureMmHg", "$pressure/3");
-
       if ($city = $get_arr['location']['name'])
       {
            return "The weather in " .$city. "(" .$country. "): \n
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%
-           -Pressure: " .pressureMmHg. " mmHg
+           -Pressure: " .$pressure/3. " mmHg
            -Cloudiness: " .$cloud. "%";
 
       }

@@ -76,7 +76,9 @@
       if ($city = $get_arr['location']['name'])
       {
            return "The weather in " .$city. "(" .$country. "): \n \n
-                   Temperature is" .$temp_c. ", feels like " .$feelslike_temp;
+                   Temperature is" .$temp_c. ", feels like " .$feelslike_temp "\n
+                   -Weather" .$icon. "\n
+                   -Humidity " .$humidity
       }
       else
       {

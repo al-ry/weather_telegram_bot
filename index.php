@@ -57,17 +57,18 @@
       $country = $get_arr['location']['country'];
       $discr = $get_arr['current']['condition']['text'];
       $cloud = $get_arr['current']['cloud'];
-      $pressure = $get_arr['current']['pressure_mb'];
-      
+      $pressureMb = $get_arr['current']['pressure_mb'];
+
+      define("baseMmHg", 1.333);
+
       if ($city = $get_arr['location']['name'])
       {
-           return "The weather in " .$city. "(" .$country. "): \n
+           return "Current weather in " .$city. "(" .$country. "): \n
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%
-           -Pressure: " .$pressure. " Mb
+           -Pressure: " .$pressure/ baseMmHg. " Mb
            -Cloudiness: " .$cloud. "%";
-
       }
       else
       {

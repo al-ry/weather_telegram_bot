@@ -7,8 +7,8 @@
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Узнать погоду"],["Избранные города"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
+    $keyboard = [["Find out the weather"],["Favourite cities"],["Add a city"]]; //Клавиатура
+    $keyboard_forecast = [["Current weather"],["Forecast"],["Back to main menu\xE2\x9D\x8C"]];
     
     /////tests
     $city = "Yoshkar";
@@ -40,26 +40,21 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
-        elseif ($text == "Узнать погоду")
+        elseif ($text == "Find out the weather")
         {
-            $reply = "Select Current weather or Forecast";
+            $reply = "Select option from menu";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
-        else
-        {       
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
-            if (null)
-            {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "City is not found"]);
-            }
+        elseif ($text == "Favourite cities")
+        {
+            ////////db
+        }
+        elseif ($text == "Add a city")
+        {
+            ////////db
         }
     }
-    else
-    {
-    	$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Отправьте текстовое сообщение." ]);
-    }
-    
 
     function getCurrentWeather(string $city): string {
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";

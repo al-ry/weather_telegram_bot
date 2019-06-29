@@ -42,8 +42,9 @@
         }
         elseif ($text == "Узнать погоду")
         {
-            $reply = "Введите название населенного пункта";
+            $reply = "Send me a name of location";
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
         else
         {       
@@ -60,7 +61,7 @@
     }
     
 
-    function getCurrentWeather(string $city): ?string {
+    function getCurrentWeather(string $city): string {
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
       $weather_data = file_get_contents($api);
       $get_arr = json_decode($weather_data, true);

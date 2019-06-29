@@ -11,7 +11,7 @@
     $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
     
     /////tests
-    $city = "Moscow";
+    $city = "Yoshkar";
 
     $api = "http://api.apixu.com/v1/forecast.json?key=bd8f380296394c11b8053241192806&q=$city&days=3";
     $weather_data = file_get_contents($api);

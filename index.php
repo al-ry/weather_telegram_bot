@@ -9,6 +9,15 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
+    
+    /////tests
+    $city = "Moscow";
+
+    $api = "http://api.apixu.com/v1/forecast.json?key=bd8f380296394c11b8053241192806&q=$city&days=3";
+    $weather_data = file_get_contents($api);
+    $get_arr = json_decode($weather_data, true);
+    echo '<pre>' .print_r($get_arr, true). '<pre>';
+    ///// 
 
     if($text)
     {
@@ -16,11 +25,11 @@
         {
             if (strlen($name) != 0)
             {
-                $reply = "Добро пожаловать, ".$name."!";
+                $reply = "Hello, ".$name."!";
             }
             else
             {
-                $reply = "Добро пожаловать, Незнакомец";
+                $reply = "Hello, stranger";
             }
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
@@ -37,8 +46,12 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
         else
-        { 
+        {       
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
+            if (null)
+            {
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "City is not found"]);
+            }
         }
     }
     else
@@ -47,7 +60,7 @@
     }
     
 
-    function getCurrentWeather($city){
+    function getCurrentWeather(string $city): ?string {
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
       $weather_data = file_get_contents($api);
       $get_arr = json_decode($weather_data, true);
@@ -61,7 +74,7 @@
 
       if ($city = $get_arr['location']['name'])
       {
-           return "Current weather in " .$city. "(" .$country. "): \n
+           return "Current weather in <b>" .$city. "(" .$country. ")</b>: \n
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%
@@ -70,7 +83,7 @@
       }
       else
       {
-          return "The city is not found";
+            return null;
       }
     }
 ?>

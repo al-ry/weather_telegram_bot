@@ -42,9 +42,9 @@
         }
         elseif ($text == "Узнать погоду")
         {
-            $reply = "Send me a name of location";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $reply = "Select Current weather or Forecast";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         else
         {       

@@ -28,7 +28,7 @@
 
     if($text)
     {
-        if ($telegram->triggerCommand("/start"))
+        if (triggerCommand("/start"))
         {
             if (strlen($name) != 0)
             {

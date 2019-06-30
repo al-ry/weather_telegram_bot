@@ -28,7 +28,7 @@
 
     if($text)
     {
-        if ($text == "/start")
+        if ($telegram->triggerCommand("/start"))
         {
             if (strlen($name) != 0)
             {
@@ -47,7 +47,7 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
-        elseif ($telegram->triggerCommand([ 'chat_id' => $chat_id, 'text' => "Find out the weather" ]))
+        elseif ($text == "Find out the weather")
         {
             $reply = "Select option from menu";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);

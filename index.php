@@ -28,7 +28,7 @@
 
     if($text)
     {
-        if (triggerCommand("/start"))
+        if ($text == triggerCommand("/start"))
         {
             if (strlen($name) != 0)
             {

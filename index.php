@@ -47,10 +47,10 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
-        elseif ($text == "Find out the weather")
+        elseif ($telegram->triggerCommand([ 'chat_id' => $chat_id, 'text' => "Find out the weather" ]))
         {
             $reply = "Select option from menu";
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Favourite cities")
@@ -63,7 +63,7 @@
         }
         elseif ($text == "Back to main menu\xE2\x9D\x8C")
         {
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
     }
@@ -82,7 +82,7 @@
 
       if ($city = $get_arr['location']['name'])
       {
-           return "Current weather in <b>" .$city. "(" .$country. ")</b>: \n
+           return "Current weather in " .$city. "(" .$country. "): \n
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%

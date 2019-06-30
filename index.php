@@ -6,9 +6,8 @@
     define('DB_PASS', 'e0efc55a674f218');
     define('DB_NAME', 'heroku_253b17b01e157dc');
 
-
-
-
+    $db = new mysqli ('DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME');
+	$db->autoReconnect = true;
 
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
@@ -56,7 +55,8 @@
         }
         else
         {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);       
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
+            $db->insert('city', $text);
         }
     }
 

@@ -56,7 +56,6 @@
         else
         {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
-            $db->insert('city', $text);
         }
     }
 

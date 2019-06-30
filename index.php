@@ -1,6 +1,15 @@
 <?php
     include('vendor/autoload.php'); //Подключаем библиотеку
     use Telegram\Bot\Api; 
+    define('DB_HOST', 'eu-cdbr-west-02.cleardb.net');
+    define('DB_USER', 'b06b82c6cf78a6');
+    define('DB_PASS', 'e0efc55a674f218');
+    define('DB_NAME', 'heroku_253b17b01e157dc');
+
+    $mysqli = new mysqli ('DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME');
+
+
+
 
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
@@ -11,19 +20,27 @@
     $keyboard_forecast = [["Current weather"],["Forecast"],["Back to main menu\xE2\x9D\x8C"]];
     
     /////tests
-    $city = "Yoshkar";
+    $city = "Saint-Petersburg";
+    $country = "America";
 
-    $api = "http://api.apixu.com/v1/forecast.json?key=bd8f380296394c11b8053241192806&q=$city&days=3";
-    $weather_data = file_get_contents($api);
-    $get_arr = json_decode($weather_data, true);
-    echo '<pre>' .print_r($get_arr, true). '<pre>';
-    var_dump($keyboard);
-    echo $keyboard[0][0];
-    $test = "Find out the weather";
-    if ($keyboard[0][0])
-    {
-      echo " success";
-    }
+    ////DB
+    $testdb = new mysqli ('localhost', 'root', '', '');
+    $db = new MysqliDb ($testdb);
+        $data = [
+            "id" => "1",
+            "name" => "John",
+        ];
+
+        $id = $db->insert ('name', $data);
+        if ($id)
+        {
+        echo 'user was created. Id=' . $id;
+        }
+
+
+
+    ////DB
+
     ///// 
 
     if($text)
@@ -32,7 +49,7 @@
         {
             if (strlen($name) != 0)
             {
-                $reply = "Hello, <b>".$name."</b>!";
+                $reply = "Hello, ".$name."!";
             }
             else
             {
@@ -64,6 +81,7 @@
         else
         {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
+            $db->insert('city', $text);
         }
     }
 

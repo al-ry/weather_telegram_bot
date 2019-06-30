@@ -18,10 +18,6 @@
     $keyboard = [["Find out the weather"],["Favourite cities"],["Add a city"]]; //Клавиатура
     $keyboard_forecast = [["Current weather"],["Forecast"],["Back to main menu\xE2\x9D\x8C"]];
     
-    /////tests
-    $city = "Saint-Petersburg";
-    $country = "America";
-
     ////DB
     $testdb = new mysqli ('localhost', 'root', '', '');
     $db = new MysqliDb ($testdb);
@@ -35,12 +31,7 @@
         {
         echo 'user was created. Id=' . $id;
         }
-
-
-
-    ////DB
-
-    ///// 
+        ////
 
     if($text)
     {
@@ -80,7 +71,7 @@
         else
         {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
-            $mysqli->insert('city', $text);
+            
         }
     }
 

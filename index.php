@@ -10,7 +10,6 @@
 
 
 
-
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
     $text = $result["message"]["text"]; //Текст сообщения
@@ -81,7 +80,7 @@
         else
         {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
-            $db->insert('city', $text);
+            $mysqli->insert('city', $text);
         }
     }
 

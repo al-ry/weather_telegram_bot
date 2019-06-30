@@ -28,11 +28,11 @@
 
     if($text)
     {
-        if ($text == triggerCommand("/start"))
+        if ($text == "/start")
         {
             if (strlen($name) != 0)
             {
-                $reply = "Hello, ".$name."!";
+                $reply = "Hello, <b>".$name."</b>!";
             }
             else
             {
@@ -52,6 +52,22 @@
             $reply = "Select option from menu";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            $telegram-> triggerCommand("Current weather");
+            $telegram-> triggerCommand("Forecast");
+            if ($text == "Current weather")
+            {
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);                    
+            }
+        }
+        elseif ($text == "Current weahter")
+        {
+            $reply = "Send me a name of location";
+            $telegram-> triggerCommand("Current weather");
+            if ($text == "Current weather")
+            {
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);                    
+            }
+
         }
         elseif ($text == "Favourite cities")
         {

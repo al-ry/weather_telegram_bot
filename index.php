@@ -6,7 +6,7 @@
     define('DB_PASS', 'e0efc55a674f218');
     define('DB_NAME', 'heroku_253b17b01e157dc');
 
-    $mysqli = new mysqli ('DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME');
+
 
 
 
@@ -18,20 +18,6 @@
     $keyboard = [["Find out the weather"],["Favourite cities"],["Add a city"]]; //Клавиатура
     $keyboard_forecast = [["Current weather"],["Forecast"],["Back to main menu\xE2\x9D\x8C"]];
     
-    ////DB
-    $testdb = new mysqli ('localhost', 'root', '', '');
-    $db = new MysqliDb ($testdb);
-        $data = [
-            "id" => "1",
-            "name" => "John",
-        ];
-
-        $id = $db->insert ('name', $data);
-        if ($id)
-        {
-        echo 'user was created. Id=' . $id;
-        }
-        ////
 
     if($text)
     {
@@ -70,8 +56,7 @@
         }
         else
         {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
-            
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);       
         }
     }
 

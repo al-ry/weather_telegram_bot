@@ -17,6 +17,13 @@
     $weather_data = file_get_contents($api);
     $get_arr = json_decode($weather_data, true);
     echo '<pre>' .print_r($get_arr, true). '<pre>';
+    var_dump($keyboard);
+    echo $keyboard[0][0];
+    $test = "Find out the weather";
+    if ($keyboard[0][0])
+    {
+      echo " success";
+    }
     ///// 
 
     if($text)
@@ -53,6 +60,11 @@
         elseif ($text == "Add a city")
         {
             ////////db
+        }
+        elseif ($text == "Back to main menu\xE2\x9D\x8C")
+        {
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
     }
 

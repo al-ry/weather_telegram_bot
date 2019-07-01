@@ -7,6 +7,7 @@
     define('DB_NAME', 'heroku_253b17b01e157dc');
 
     $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b06b82c6cf78a6', 'e0efc55a674f218', 'heroku_253b17b01e157dc');
+    $test = new MysqliDb ('localhost', 'root', '', '');
 
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
@@ -50,24 +51,25 @@
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_city, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
+        elseif ($text == "Текущая погода")
+        {
+            $reply = "Введите город";   
+        }
         elseif ($text == "Добавить город")
         {
             ////////db
         }
         else
         {
-            $i = 0;
+
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
             $data = [
-                'id' => $i,
                 'city' => $text
             ];
-            $i = ++$i;
             $id = $db->insert ('city', $data);
             $db->where ("id", 1);
             $city = $db->getOne ("heroku_253b17b01e157dc.city");
-            array_push($keyboard_city, $text);
-            
+            array_push($keyboard_city, $text);          
         }  
     }
 

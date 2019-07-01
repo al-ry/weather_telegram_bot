@@ -58,14 +58,9 @@
         {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
             $data = [
-                'id' => "1",
                 'city' => $text
             ];
             $id = $db->insert ('city', $data);
-            if ($id)
-            {
-                ++$id;
-            }
             $db->where ("id", 1);
             $city = $db->getOne ("heroku_253b17b01e157dc.city");
             array_push($keyboard_city, $text);

@@ -6,17 +6,15 @@
     define('DB_PASS', 'e0efc55a674f218');
     define('DB_NAME', 'heroku_253b17b01e157dc');
 
-    $db = new mysqli ('DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME');
-	$db->autoReconnect = true;
+    $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b06b82c6cf78a6', 'e0efc55a674f218', 'heroku_253b17b01e157dc');
 
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Find out the weather"],["Favourite cities"],["Add a city"]]; //Клавиатура
-    $keyboard_forecast = [["Current weather"],["Forecast"],["Back to main menu\xE2\x9D\x8C"]];
-    
+    $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
+    $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
 
     if($text)
     {
@@ -24,11 +22,11 @@
         {
             if (strlen($name) != 0)
             {
-                $reply = "Hello, ".$name."!";
+                $reply = "Привет, ".$name."!";
             }
             else
             {
-                $reply = "Hello, stranger";
+                $reply = "Привет, незнакомец";
             }
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
@@ -39,17 +37,17 @@
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
-        elseif ($text == "Find out the weather")
+        elseif ($text == "Узнать погоду")
         {
-            $reply = "Select option from menu";
+            $reply = "Выберите опцию из меню";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
-        elseif ($text == "Favourite cities")
+        elseif ($text == "Избранные города")
         {
             ////////db
         }
-        elseif ($text == "Add a city")
+        elseif ($text == "Добавить город")
         {
             ////////db
         }

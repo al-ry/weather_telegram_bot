@@ -9,6 +9,6 @@
     "require": {
         "irazasyed/telegram-bot-sdk": "2.0",
         "thewulf7/travel-payouts": "^1.1",
-        "thingengineer/mysqli-database-class": "^2.9"
+        "thingengineer/mysqli-database-class": "dev-master"
     }
 }

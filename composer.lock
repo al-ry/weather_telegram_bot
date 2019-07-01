@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fdbc8ac7f6b012c591cf3055f9d70cd0",
+    "content-hash": "ec02da47b7c33cefa8e78ca2f7ee5de1",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -804,16 +804,16 @@
         },
         {
             "name": "thingengineer/mysqli-database-class",
-            "version": "v2.9.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ThingEngineer/PHP-MySQLi-Database-Class.git",
-                "reference": "e122f8e0c22165092b81578ecd618842e9e01d64"
+                "reference": "8e7abbe65af749ada8cda83794d7c999a183edd8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ThingEngineer/PHP-MySQLi-Database-Class/zipball/e122f8e0c22165092b81578ecd618842e9e01d64",
-                "reference": "e122f8e0c22165092b81578ecd618842e9e01d64",
+                "url": "https://api.github.com/repos/ThingEngineer/PHP-MySQLi-Database-Class/zipball/8e7abbe65af749ada8cda83794d7c999a183edd8",
+                "reference": "8e7abbe65af749ada8cda83794d7c999a183edd8",
                 "shasum": ""
             },
             "require": {
@@ -832,26 +832,28 @@
             ],
             "authors": [
                 {
-                    "name": "Josh Campbell",
-                    "email": "josh.lee.campbell@gmail.com",
-                    "homepage": "https://github.com/joshcam",
-                    "role": "Developer"
-                },
-                {
                     "name": "Alexander V. Butenko",
                     "email": "a.butenka@gmail.com",
                     "homepage": "http://smarttechdo.com",
                     "role": "Developer"
+                },
+                {
+                    "name": "Josh Campbell",
+                    "email": "josh.lee.campbell@gmail.com",
+                    "homepage": "https://github.com/thingengineer",
+                    "role": "Developer"
                 }
             ],
             "description": "PHP MySQL Wrapper and object mapper which utilizes MySQLi and prepared statements",
-            "time": "2018-02-08T05:07:59+00:00"
+            "time": "2019-06-08T16:40:57+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "thingengineer/mysqli-database-class": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

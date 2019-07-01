@@ -87,10 +87,9 @@
         {
             $db->where ('command', 'currentWeather');
             $command = $db->getOne ('heroku_253b17b01e157dc.commands');
-            if ($command = "Current Weather")
+            if ($command = "currentWeather")
             {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text) ]);
-                
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text) ]);  
             }
             $data = [
                 'city' => $text

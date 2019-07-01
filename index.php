@@ -1,15 +1,17 @@
 <?php
     include('vendor/autoload.php'); //Подключаем библиотеку
+    require_once('database.php'); //Подключаем библиотеку
+    require_once('weatherapi.php');
+    require_once('telegram.php');
     use Telegram\Bot\Api; 
-    define('DB_HOST', 'eu-cdbr-west-02.cleardb.net');
-    define('DB_USER', 'b06b82c6cf78a6');
-    define('DB_PASS', 'e0efc55a674f218');
-    define('DB_NAME', 'heroku_253b17b01e157dc');
 
-    $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b06b82c6cf78a6', 'e0efc55a674f218', 'heroku_253b17b01e157dc');
-
-      
-
+    $telegram = initToken();
+    $result =  userUpdates();
+    $text = getText();
+    $chat_id = getUserId();
+    $db = initDB();
+    $name = getUserName();
+    
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
     $text = $result["message"]["text"]; //Текст сообщения
@@ -56,10 +58,6 @@
         {
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $data = [
-                'commands' => 'currentWeather'
-            ];
-            $id = $db->insert ('heroku_253b17b01e157dc.commands', $data);
         }
         elseif ($text == "Добавить город")
         {
@@ -67,22 +65,22 @@
         }
         else
         {
-            $db->where ('commands', 'currentWeather');
-            $command = $db->getOne ('heroku_253b17b01e157dc.commands');
-            echo $command;
-            if ($command = "currentWeather")
-            {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text)]); 
-                $db->delete('heroku_253b17b01e157dc.commands');
-            }
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text)]); 
         }        
     }
 
     function getCurrentWeather(string $city): string {
+        // getWeatherData()
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
-      $weather_data = file_get_contents($api);
-      $get_arr = json_decode($weather_data, true);
+      $weatherData = file_get_contents($api);
+      $weatherData = json_decode($weather_data, true);
+      //$data = getWeatherData();
+      // getTempetrature(array $data): string
       $temp_c = $get_arr['current']['temp_c'];
+
+
+     // $temp = getTempetrature($data);
+
       $feelslike_temp = $get_arr['current']['feelslike_c'];
       $humidity = $get_arr['current']['humidity'];
       $country = $get_arr['location']['country'];

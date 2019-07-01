@@ -55,7 +55,7 @@
         {
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $currentData = [
+            $data = [
                 "command" => 'currentWeather'
             ];
             $id = $db->insert ('heroku_253b17b01e157dc.commands', $data);
@@ -63,7 +63,7 @@
         elseif ($text == "Добавить город")
         {
             ////////db
-            $forecastData = [
+            $data = [
                 "command" => 'forecastWeather'
             ];
             $id = $db->insert ('heroku_253b17b01e157dc.commands', $data);

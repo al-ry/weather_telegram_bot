@@ -75,7 +75,8 @@
             $command = $db->getOne ('heroku_253b17b01e157dc.commands');
             if ($command = "currentWeather")
             {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text) ]);  
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text) ]); 
+                $db->delete('heroku_253b17b01e157dc.commands');
             }
             $data = [
                 'city' => $text

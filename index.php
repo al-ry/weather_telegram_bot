@@ -54,7 +54,17 @@
         else
         {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
-        }
+            $data = [
+                'id' => "0",
+                'city' => $text
+            ];
+            $id = $db->insert ('city', $data);
+            if ($id)
+            {
+                ++$id;
+            }
+
+        }  
     }
 
     function getCurrentWeather(string $city): string {

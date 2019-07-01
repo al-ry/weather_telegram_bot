@@ -4,14 +4,19 @@
     require_once('weatherapi.php');
     require_once('telegramapi.php');
 
-
-    $result =  userUpdates();
     $telegram = initToken();
+    $result =  userUpdates();
     $text = getText($result);
     $chat_id = getUserId($result);
     $name = getUserName($result);
     $db = initDB();
-    
+
+
+    $telegram = new Api('375466075:AAEARK0r2nXjB67JiB35JCXXhKEyT42Px8s'); //Устанавливаем токен, полученный у BotFather
+    $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
+    $text = $result["message"]["text"]; //Текст сообщения
+$chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
+$name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text)
     {
         if ($text == "/start")

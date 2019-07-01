@@ -64,10 +64,6 @@
         elseif ($text == "Добавить город")
         {
             ////////db
-            $data = [
-                "command" => 'forecastWeather'
-            ];
-            $id = $db->insert ('heroku_253b17b01e157dc.commands', $data);
         }
         else
         {

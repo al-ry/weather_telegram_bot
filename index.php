@@ -47,7 +47,8 @@
         elseif ($text == "Избранные города")
         {
             ////////db
-
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_city, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Добавить город")
         {

@@ -3,13 +3,13 @@
     require_once('database.php'); 
     require_once('weatherapi.php');
     require_once('telegramapi.php');
-    use Telegram\Bot\Api; 
 
-    $telegram = initToken();
+
     $result =  userUpdates();
-    $text = getText();
-    $chat_id = getUserId();
-    $name = getUserName();
+    $telegram = initToken();
+    $text = getText($result);
+    $chat_id = getUserId($result);
+    $name = getUserName($result);
     $db = initDB();
     
     if($text)

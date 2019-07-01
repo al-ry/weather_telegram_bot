@@ -56,10 +56,13 @@
         }
         else
         {
+            $i = 0;
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
             $data = [
+                'id' => $i,
                 'city' => $text
             ];
+            $i = ++$i;
             $id = $db->insert ('city', $data);
             $db->where ("id", 1);
             $city = $db->getOne ("heroku_253b17b01e157dc.city");

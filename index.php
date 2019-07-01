@@ -4,12 +4,7 @@
     require_once('weatherapi.php');
     require_once('telegramapi.php');
 
-    $telegram = initToken();
-    $result =  userUpdates();
-    $text = getText($result);
-    $chat_id = getUserId($result);
-    $name = getUserName($result);
-    $db = initDB();
+ 
 
 
     $telegram = new Api('375466075:AAEARK0r2nXjB67JiB35JCXXhKEyT42Px8s'); //Устанавливаем токен, полученный у BotFather

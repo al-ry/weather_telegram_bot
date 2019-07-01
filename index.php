@@ -53,7 +53,12 @@
         }
         elseif ($text == "Текущая погода")
         {
-            $reply = "Введите город";   
+            $reply = "Введите город"; 
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $data = [
+                "current" => '1'
+            ];
+            $id = $db->insert ('heroku_253b17b01e157dc.commands', $data);
         }
         elseif ($text == "Добавить город")
         {
@@ -61,16 +66,20 @@
         }
         else
         {
-
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
             $data = [
                 'city' => $text
             ];
             $id = $db->insert ('city', $data);
             $db->where ("id", 1);
             $city = $db->getOne ("heroku_253b17b01e157dc.city");
-            array_push($keyboard_city, $text);          
-        }  
+            array_push($keyboard_city, $text);
+            if ($db->where ("current", 1))  
+            {
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
+                $db->where ('current', 1);
+                $db->delete('current');
+            }
+        }        
     }
 
     function getCurrentWeather(string $city): string {

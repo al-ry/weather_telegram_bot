@@ -15,6 +15,7 @@
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
+    $keyboard_city = [];
 
     if($text)
     {
@@ -46,6 +47,7 @@
         elseif ($text == "Избранные города")
         {
             ////////db
+
         }
         elseif ($text == "Добавить город")
         {
@@ -55,7 +57,7 @@
         {
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
             $data = [
-                'id' => "0",
+                'id' => "1",
                 'city' => $text
             ];
             $id = $db->insert ('city', $data);
@@ -63,7 +65,10 @@
             {
                 ++$id;
             }
-
+            $db->where ("id", 1);
+            $city = $db->getOne ("heroku_253b17b01e157dc.city");
+            array_push($keyboard_city, $text);
+            
         }  
     }
 

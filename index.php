@@ -7,21 +7,7 @@
     define('DB_NAME', 'heroku_253b17b01e157dc');
 
     $db = new MysqliDb ('eu-cdbr-west-02.cleardb.net', 'b06b82c6cf78a6', 'e0efc55a674f218', 'heroku_253b17b01e157dc');
-    $test = new MysqliDb ('localhost', 'root', '', '');
 
-    $data = [
-        "id" => "500",
-        "name" => "John",
-      ];
-
-      $id = $test->insert ('sys.new_table_test', $data);
-      if ($id)
-      {
-        echo 'user was created. Id=' . $id;
-      }
-      $db->where ("id", 1);
-    $user = $test->getOne ("sys.new_table_test");
-    echo $user['id'];
       
 
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather

@@ -1,13 +1,13 @@
 <?php
 
-function getWeatherData(): array
+function getWeatherData(string $city): array
 {
-    $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
+    $api = "http://api.apixu.com/v1/forecast.json?key=bd8f380296394c11b8053241192806&q=$city&days=3";
     $weatherData = file_get_contents($api);
-    $weatherData = json_decode($weatherData, true);
+    return $weatherData = json_decode($weatherData, true);
 }
 
 function getTemperature(array $data): string
 {
-
+    return $data['current']['temp_c'];
 }

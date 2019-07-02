@@ -4,7 +4,7 @@ include('vendor/autoload.php');
 require_once('telegramapi.php');
 require_once('weatherapi.php');
 require_once('database.php');
-
+use Telegram\Bot\Api;
     
 $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
 $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользовател

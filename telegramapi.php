@@ -21,7 +21,7 @@ function getText(array $result): string
     return $result["message"]["text"];
 }
 
-function getUserId(array  $result): string
+function getUserId(array  $result): int
 {
     return $result["message"]["chat"]["id"];
 }

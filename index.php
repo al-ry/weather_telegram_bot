@@ -84,7 +84,7 @@ use Telegram\Bot\Api;
             
         }        
     }
-
+    echo $command['commands'];
     function getCurrentWeather(string $city): string {
         // getWeatherData()
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";

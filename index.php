@@ -6,7 +6,7 @@ require_once('weatherapi.php');
 require_once('database.php');
 use Telegram\Bot\Api;
 
-
+    $test = new MysqliDb('127.0.0.1', 'root', '', '');
     $db = initDB();
     
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
@@ -76,7 +76,7 @@ use Telegram\Bot\Api;
         {
             $db->where ("commands", "currentWeather");
             $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
-            $weather = $command['commands'];   
+            $weather = $command['commands']; 
             if ($weather == 'currentWeather')
             {
                 echo " succsess";
@@ -87,6 +87,10 @@ use Telegram\Bot\Api;
             
         }        
     }
+    $db->where ("commands", "currentWeather");
+    $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
+    $weather = $command['commands']; 
+    echo $weather;
 
     function getCurrentWeather(string $city): string {
         // getWeatherData()

@@ -6,7 +6,7 @@ $keyboard = [["Узнать погоду"],["Избранные города"],[
 $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
 
 
-function userUpdates(): void
+function userUpdates(Api $telegram): void
 {
     $telegram -> getWebhookUpdates();
 }

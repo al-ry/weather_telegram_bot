@@ -51,7 +51,7 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Текущая погода")
         {
-            if (getUserCommand($db, null) == null)
+            if (getUserCommand($db, strlen('')) == '')
             {
                 $reply = "Введите город"; 
                 $data = [

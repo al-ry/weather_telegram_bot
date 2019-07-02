@@ -74,9 +74,12 @@ use Telegram\Bot\Api;
         else
         {
             $db->where ("commands", "currentWeather");
-            $command = $db->getOne ("heroku_253b17b01e157dc.commands");     
-            if ($command['commands'] == "currentWeather")
+            $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
+            var_dump($command);
+            $weather = $command['commands'];   
+            if ($weather == "currentWeather")
             {
+                echo " succsess";
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text)]);
                 $db->where ("commands", "currentWeather");
                 $db->delete('heroku_253b17b01e157dc.commands');
@@ -84,7 +87,11 @@ use Telegram\Bot\Api;
             
         }        
     }
-    echo $command['commands'];
+    $db->where ("commands", "currentWeather");
+    $command = $db->getOne ("heroku_253b17b01e157dc.commands");  
+    echo $command["commands"];
+    var_dump($command);
+
     function getCurrentWeather(string $city): string {
         // getWeatherData()
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";

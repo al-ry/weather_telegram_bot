@@ -7,7 +7,7 @@ const DB_NAME = 'heroku_253b17b01e157dc';
 
 function initDB(): MysqliDb
 {
-    return new MysqliDb (DB_HOST, 'b06b82c6cf78a6', 'e0efc55a674f218', 'heroku_253b17b01e157dc');
+    return new MysqliDb (DB_HOST, DB_USER, DB_PASS, DB_NAME);
 }
 
 function removeUserCommand(MysqliDb $db, string $user): void

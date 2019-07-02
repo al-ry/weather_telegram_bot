@@ -72,7 +72,6 @@ use Telegram\Bot\Api;
         }
         else
         {
-            $db->where ("commands", "currentWeather");
             $db->where ("commands", "forecastWeather");
             $command = $db->getOne ("heroku_253b17b01e157dc.commands");
             if ($command == "currentWeather")
@@ -81,7 +80,12 @@ use Telegram\Bot\Api;
                 $db->where ("commands", "currentWeather");
                 $db->delete('heroku_253b17b01e157dc.commands');
             }
-            
+            if ($command == "forecastWeather")
+            {
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text)]);
+                $db->where ("commands", "forecastWeather");
+                $db->delete('heroku_253b17b01e157dc.commands');
+            }
         }        
     }
 

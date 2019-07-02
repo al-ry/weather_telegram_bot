@@ -51,7 +51,7 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Текущая погода")
         {
-            if (getUserCommand($db, '') == '')
+            if (getUserCommand($db, null) == null)
             {
                 $reply = "Введите город"; 
                 $data = [
@@ -94,10 +94,6 @@ use Telegram\Bot\Api;
         }        
     }
 
-    if (getUserCommand($db, '') == '')
-    {
-        echo "success check";
-    }
 
     function getCurrentWeather(string $city): string {
         // getWeatherData()

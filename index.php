@@ -51,14 +51,20 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Текущая погода")
         {
-
-            $reply = "Введите город"; 
+            if (getUserCommand($db, '') == '')
+            {
+                $reply = "Введите город"; 
+                $data = [
+                    "commands" => "currentWeather",
+                    "user_id" => $chat_id
+                ];
+                $id = addCommand($db, $data);
+            }
+            else 
+            {
+                $reply = "уже есть выполняемая команда";
+            }
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $data = [
-                "commands" => "currentWeather",
-                "user_id" => $chat_id
-            ];
-            $id = addCommand($db, $data);
         }
         elseif ($text == "Прогноз")
         {

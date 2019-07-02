@@ -10,6 +10,7 @@ use Telegram\Bot\Api;
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+    $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
 
 
     $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=Moscow";

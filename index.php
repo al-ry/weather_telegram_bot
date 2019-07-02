@@ -65,7 +65,7 @@ use Telegram\Bot\Api;
                 "commands" => "forecastWeather",
                 "user_id" => $chat_id
             ];
-            $id = $db->insert ('heroku_253b17b01e157dc.commands', $data);
+            $id = addCommand();
         }
         elseif ($text == "Добавить город")
         {

@@ -73,8 +73,7 @@ use Telegram\Bot\Api;
         }
         else
         {
-            echo getUserCommand($db, 'currentWeather');
-            if ($weather == 'currentWeather')
+            if (getUserCommand($db, 'currentWeather') == 'currentWeather')
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 removeUserCommand($db, "currentWeather");

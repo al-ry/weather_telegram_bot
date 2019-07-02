@@ -16,7 +16,6 @@ use Telegram\Bot\Api;
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
-    echo "hello";
     if($text)
     {
         if ($text == "/start")
@@ -74,7 +73,6 @@ use Telegram\Bot\Api;
         }
         else
         {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
             $db->where ("commands", "currentWeather");
             $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
             $weather = $command['commands']; 
@@ -83,10 +81,13 @@ use Telegram\Bot\Api;
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 $db->where ("commands", "currentWeather");
                 $db->delete('heroku_253b17b01e157dc.commands');
-            }
-            
+            }       
         }        
     }
+    $db->where ("commands", "currentWeather");
+    $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
+    $weather = $command['commands']; 
+    echo $weather;
  
     function getCurrentWeather(string $city): string {
         // getWeatherData()

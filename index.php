@@ -51,6 +51,7 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Текущая погода")
         {
+            if getUserCommand($db, '')
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $data = [
@@ -61,6 +62,8 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Прогноз")
         {
+            $reply = "Введите город"; 
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $data = [
                 "commands" => "forecastWeather",
                 "user_id" => $chat_id
@@ -77,7 +80,11 @@ use Telegram\Bot\Api;
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 removeUserCommand($db, "currentWeather");
-            }       
+            } 
+            if (getUserCommand($db, 'forecastWeather') == 'forecastWeather')
+            {
+                removeUserCommand($db, "forecastWeather");
+            }     
         }        
     }
 

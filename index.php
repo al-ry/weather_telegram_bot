@@ -92,14 +92,12 @@ use Telegram\Bot\Api;
         // getWeatherData()
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
       $weatherData = file_get_contents($api);
-      $weatherData = json_decode($weatherData, true);
+      $get_arr = json_decode($weatherData, true);
       //$data = getWeatherData();
       // getTempetrature(array $data): string
       $temp_c = $get_arr['current']['temp_c'];
 
-
      // $temp = getTempetrature($data);
-
       $feelslike_temp = $get_arr['current']['feelslike_c'];
       $humidity = $get_arr['current']['humidity'];
       $country = $get_arr['location']['country'];

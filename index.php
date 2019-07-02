@@ -9,8 +9,8 @@ use Telegram\Bot\Api;
     $telegram = initToken(); //Устанавливаем токен, полученный у BotFather
     $result =  userUpdates($telegram); //Передаем в переменную $result полную информацию о сообщении пользовател
     $text = getText($result); //Текст сообщения
-    $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
-    $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+    $chat_id = getUserId($result); //Уникальный идентификатор пользователя
+    $name = getUserName($result); //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
     echo "hello";

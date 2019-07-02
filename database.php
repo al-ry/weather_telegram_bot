@@ -28,9 +28,9 @@ function updateCommand(MysqliDb $db, array $data): void
     addCommand($db, $data);
 }
 
-function getUserCommand(MysqliDb $db, string $command): string
+function getUserCommand(MysqliDb $db, string $command): void
 {
     $db->where ("commands", $command);
     $getDataDB = $db->getOne (DB_NAME . ".bot_commands"); 
-    return $getDataDB['commands']; 
+    $getDataDB['commands']; 
 }

@@ -1,7 +1,6 @@
 <?php
 
 include('vendor/autoload.php');
-
 use Telegram\Bot\Api; 
  
 
@@ -9,8 +8,8 @@ use Telegram\Bot\Api;
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользователя
     $text = $result["message"]["text"]; //Текст сообщения
-$chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
-$name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+    $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
+    $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     if($text)
     {
         if ($text == "/start")
@@ -63,7 +62,7 @@ $name = $result["message"]["from"]["username"]; //Юзернейм пользо�
         // getWeatherData()
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
       $weatherData = file_get_contents($api);
-      $weatherData = json_decode($weather_data, true);
+      $weatherData = json_decode($weatheData, true);
       //$data = getWeatherData();
       // getTempetrature(array $data): string
       $temp_c = $get_arr['current']['temp_c'];
@@ -92,4 +91,3 @@ $name = $result["message"]["from"]["username"]; //Юзернейм пользо�
             return null;
       }
     }
-?>

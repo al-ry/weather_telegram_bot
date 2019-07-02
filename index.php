@@ -74,12 +74,12 @@ use Telegram\Bot\Api;
         }
         else
         {
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
             $db->where ("commands", "currentWeather");
             $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
             $weather = $command['commands']; 
             if ($weather == 'currentWeather')
             {
-                echo " succsess";
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 $db->where ("commands", "currentWeather");
                 $db->delete('heroku_253b17b01e157dc.commands');

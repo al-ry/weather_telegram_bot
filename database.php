@@ -32,5 +32,5 @@ function getUserCommand(MysqliDb $db, string $command): string
 {
     $db->where ("commands", $command);
     $getDataDB = $db->getOne (DB_NAME . ".bot_commands"); 
-    $getDataDB['commands']; 
+    return $getDataDB['commands']; 
 }

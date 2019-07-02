@@ -6,6 +6,7 @@ require_once('weatherapi.php');
 require_once('database.php');
 use Telegram\Bot\Api;
 
+
     $db = initDB();
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользовател
@@ -72,20 +73,15 @@ use Telegram\Bot\Api;
         }
         else
         {
-            $db->where ("commands", "forecastWeather");
-            $command = $db->getOne ("heroku_253b17b01e157dc.commands");
-            if ($command == "currentWeather")
+            $db->where ("commands", "currentWeather");
+            $command = $db->getOne ("heroku_253b17b01e157dc.commands");     
+            if ($command['commands'] == "currentWeather")
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text)]);
                 $db->where ("commands", "currentWeather");
                 $db->delete('heroku_253b17b01e157dc.commands');
             }
-            if ($command == "forecastWeather")
-            {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' =>  getCurrentWeather($text)]);
-                $db->where ("commands", "forecastWeather");
-                $db->delete('heroku_253b17b01e157dc.commands');
-            }
+            
         }        
     }
 

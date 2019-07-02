@@ -57,7 +57,7 @@ use Telegram\Bot\Api;
                 "commands" => "currentWeather",
                 "user_id" => $chat_id
             ];
-            $id = $db->insert ('heroku_253b17b01e157dc.commands', $data);
+            $id = addCommand($db, $data);
         }
         elseif ($text == "Прогноз")
         {
@@ -65,7 +65,7 @@ use Telegram\Bot\Api;
                 "commands" => "forecastWeather",
                 "user_id" => $chat_id
             ];
-            $id = addCommand();
+            $id = addCommand($db, $data);
         }
         elseif ($text == "Добавить город")
         {
@@ -73,14 +73,11 @@ use Telegram\Bot\Api;
         }
         else
         {
-            $db->where ("commands", "currentWeather");
-            $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
-            $weather = $command['commands']; 
+            getUserCommand($db, 'currentWeather');
             if ($weather == 'currentWeather')
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
-                $db->where ("commands", "currentWeather");
-                $db->delete('heroku_253b17b01e157dc.commands');
+                removeUserCommand($db, "currentWeather");
             }       
         }        
     }

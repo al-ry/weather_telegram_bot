@@ -16,6 +16,7 @@ use Telegram\Bot\Api;
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
+    echo "hello";
     if($text)
     {
         if ($text == "/start")
@@ -73,12 +74,13 @@ use Telegram\Bot\Api;
         }
         else
         {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);           
         }        
     }
+
     function getCurrentWeather(string $city): string {
         // getWeatherData()
-      $api = "http://api.apixu.com/v1/forecast.json?key=bd8f380296394c11b8053241192806&q=$city&days=3";
+      $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";
       $weatherData = file_get_contents($api);
       $weatherData = json_decode($weatheData, true);
       //$data = getWeatherData();
@@ -106,6 +108,6 @@ use Telegram\Bot\Api;
       }
       else
       {
-            return "Не найдено";
+            return 'Не найдено';
       }
     }

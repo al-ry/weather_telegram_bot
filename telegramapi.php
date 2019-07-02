@@ -7,12 +7,13 @@ $result = $telegram -> getWebhookUpdates(); //Передаем в перемен
 $text = $result["message"]["text"]; //Текст сообщения
 $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
 $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+echo $result ."ff";
 
 $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
 $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
 
 
-function userUpdates(Api $telegram): array
+function userUpdates(Api $telegram)
 {
    return $telegram -> getWebhookUpdates();
 }

@@ -81,11 +81,7 @@ use Telegram\Bot\Api;
             }       
         }        
     }
-    $db->where ("commands", "currentWeather");
-    $command = $db->getOne ("heroku_253b17b01e157dc.commands"); 
-    $weather = $command['commands']; 
-    echo $weather;
- 
+
     function getCurrentWeather(string $city): string {
         // getWeatherData()
       $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=$city";

@@ -4,7 +4,7 @@ const DB_HOST = 'eu-cdbr-west-02.cleardb.net';
 const DB_USER = 'b06b82c6cf78a6';
 const DB_PASS = 'e0efc55a674f218';
 const DB_NAME = 'heroku_253b17b01e157dc';
-const commandTable = 'heroku_253b17b01e157dc.commands';
+
 
 function initDB(): MysqliDb
 {
@@ -14,12 +14,12 @@ function initDB(): MysqliDb
 function removeUserCommand(MysqliDb $db, string $command): void
 {
     $db->where ("commands", $command);
-    $db->delete(commandTable);
+    $db->delete(DB_NAME . '.bot_commands');
 }
 
 function addCommand(MysqliDb $db, array $data): void
 {
-    $db->insert(DB_NAME . '.commands', $data);
+    $db->insert(DB_NAME . '.bot_commands', $data);
 }
 
 function updateCommand(MysqliDb $db, array $data): void
@@ -28,7 +28,9 @@ function updateCommand(MysqliDb $db, array $data): void
     addCommand($db, $data);
 }
 
-function getUserCommand(MysqliDb $db, string $user): string
+function getUserCommand(MysqliDb $db, string $command): string
 {
-    return $db->getOne(DB_NAME . '.commands', $data);
+    $db->where ("commands", $command);
+    $getDataDB = $db->getOne ("heroku_253b17b01e157dc.commands"); 
+    return $getDataDB['commands']; 
 }

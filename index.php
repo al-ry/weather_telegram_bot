@@ -90,6 +90,7 @@ use Telegram\Bot\Api;
     function getCurrentWeather(string $city): string {
       $data = getWeatherData($city);
       $temp = getTemperature($data);
+      $feelsTemp = 
       $feelslike_temp = $get_arr['current']['feelslike_c'];
       $humidity = $get_arr['current']['humidity'];
       $country = $get_arr['location']['country'];
@@ -97,7 +98,7 @@ use Telegram\Bot\Api;
       $cloud = $get_arr['current']['cloud'];
       $pressure = $get_arr['current']['pressure_mb'];
 
-      if ($city = $get_arr['location']['name'])
+      if ($city = $data['location']['name'])
       {
            return "Current weather in " .$city. "(" .$country. "): \n
            -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C

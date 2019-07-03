@@ -78,15 +78,27 @@ use Telegram\Bot\Api;
                 "user_id" => $chat_id
             ];
             addCommand($db, $data);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
         elseif ($text == "Назад в главное меню")
         {
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            
         }
         else
         {
- 
+            if (!getUserCommand($db, "addCity", "city"))
+            {
+                array_push($keyboard_city, $text);
+                $reply = "Город успешно добавлен";
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            }       		
+            if (!getUserCommand($db, "currentWeather", "bot_command"))
+            {
+                removeUserCommand($db, "currentWeather");
+            } 
+            if (!getUserCommand($db, 'forecastWeather', "bot_command"))
+            {   
+                removeUserCommand($db, "forecastWeather");
+            }  
         }        
     }
     register_shutdown_function(function () {

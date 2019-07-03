@@ -129,7 +129,7 @@ use Telegram\Bot\Api;
       }
     }
 
-    function getForecastWeather(string $city): string
+    function getForecastWeather(string $city): ?string
     {     
         $data = getWeatherData($city);
         if ($city == getCity($data))

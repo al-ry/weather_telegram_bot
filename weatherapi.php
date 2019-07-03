@@ -42,9 +42,9 @@ function getWeatherDescription(array $data): string
     return $data['forecast']['forecastday']['1']['day']['condition']['text'];
 }
 
-function getCity(array $data): string
+function getCity($data)
 {
-    return $data['location']['name'];
+    $data['location']['name'];
 }
 
 function getAverageTemperature(array $data,int $day): string

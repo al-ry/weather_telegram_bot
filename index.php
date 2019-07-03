@@ -82,7 +82,7 @@ use Telegram\Bot\Api;
         {
             if (!getUserCommand($db, "currentWeather"))
             {
-                
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text) ]);
                 if (null)
                 {
                     $reply = "Город не найден";
@@ -91,8 +91,8 @@ use Telegram\Bot\Api;
                 removeUserCommand($db, "currentWeather");
             } 
             if (!getUserCommand($db, 'forecastWeather'))
-            {
-                
+            {   
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text) ]);        
                 removeUserCommand($db, "forecastWeather");
                 if (null)
                 {
@@ -103,31 +103,44 @@ use Telegram\Bot\Api;
         }        
     }
 
+   
 
-
-    function getCurrentWeather(string $city): ?string {
-      $data = getWeatherData($city); 
-      if ($city == getCity($data))
+    function getCurrentWeather(?string $city): ?string {
+      if  (strlen($city) != 0)
       {
-            $temp = getTemperature($data);
-            $feelsTemp = getFeelTemperature($data);
-            $humidity = getHumidity($data);
-            $country = getCountry($data);
-            $discr =  getWeatherDescription($data);
-            $cloud =  getClouds($data);
-            $pressure =  getPressure($data);
-           return "Current weather in " .$city. "(" .$country. "): \n
-           -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
-           -Weather: " .$discr. "
-           -Humidity: " .$humidity. "%
-           -Pressure: " .floor($pressure / 1.333). " mmHg
-           -Cloudiness: " .$cloud. "%";
+        $data = getWeatherData($city); 
+        if ($city == getCity($data))
+        {
+              $temp = getTemperature($data);
+              $feelsTemp = getFeelTemperature($data);
+              $humidity = getHumidity($data);
+              $country = getCountry($data);
+              $discr =  getWeatherDescription($data);
+              $cloud =  getClouds($data);
+              $pressure =  getPressure($data);
+              $reply =  "Current weather in " .$city. "(" .$country. "): \n
+             -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
+             -Weather: " .$discr. "
+             -Humidity: " .$humidity. "%
+             -Pressure: " .floor($pressure / 1.333). " mmHg
+             -Cloudiness: " .$cloud. "%";
+             return $reply;
+             echo $reply;
+        }
+        else
+        {
+              return null;
+              echo 'error';
+        }  
       }
       else
       {
-            return null;
+          return null;
       }
     }
+
+
+    
 
     function getForecastWeather(string $city): ?string
     {     
@@ -155,8 +168,6 @@ use Telegram\Bot\Api;
             return null;
         }
     }
-
-    var_dump(getUserCommand($db, 'forecastWeather'));
 
     register_shutdown_function(function () {
         http_response_code(200);

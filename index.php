@@ -128,11 +128,12 @@ use Telegram\Bot\Api;
                 $avgTemp = $data['forecast']['forecastday'][$i]['day']['avgtemp_c'];
                 $avgHumidity = $data['forecast']['forecastday'][$i]['day']['avghumidity'];
                 $discr = $data['forecast']['forecastday'][$i]['day']['condition']['text'];
-                return "Forecast weather in " .$city. "(" .$country. "): \n
+                $reply = "Forecast weather in " .$city. "(" .$country. "): \n
                 -Average temperature: " . $avgTemp. " °C 
                 -Weather: " .$discr. "
                 -Humidity: " .$avgHumidity. "% \n \n";
-            } 
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            }
         }
         else
         {
@@ -140,6 +141,7 @@ use Telegram\Bot\Api;
         }
     }
 
+    getForecastWeather('Cape');
 
     register_shutdown_function(function () {
         http_response_code(200);

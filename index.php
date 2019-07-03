@@ -87,7 +87,19 @@ use Telegram\Bot\Api;
         }
         else
         {
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text) ]);
+            if (!getUserCommand($db, "addCity", "city"))
+            {
+                array_push($keyboard_city, $text);
+                removeUserCommand($db, "addCity");
+            }       		
+            if (!getUserCommand($db, "currentWeather", "bot_command"))
+            {
+                removeUserCommand($db, "currentWeather");
+            } 
+            if (!getUserCommand($db, 'forecastWeather', "bot_command"))
+            {   
+                removeUserCommand($db, "forecastWeather");
+            }     
         }        
     }
 

@@ -73,11 +73,7 @@ use Telegram\Bot\Api;
             ////////db
             $reply = "Введите город, который желаете добавить"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $data = [
-                "commands" => "addCity",
-                "user_id" => $chat_id
-            ];
-            addCommand($db, $data);
+
         }
         elseif ($text == "Назад в главное меню")
         {
@@ -98,11 +94,12 @@ use Telegram\Bot\Api;
             }       		
             if (!getUserCommand($db, "currentWeather"))
             {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text) ]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 removeUserCommand($db, "currentWeather");
             } 
             if (!getUserCommand($db, 'forecastWeather'))
             {   
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]);
                 removeUserCommand($db, "forecastWeather");
             }  
         }        
@@ -135,4 +132,30 @@ use Telegram\Bot\Api;
         {
             return "error";
         }  
+    }
+
+    function getForecastWeather(string $city): string {
+        $data = getWeatherData($city);
+        if ($city == getCity($data))
+        {
+            $country = getCountry($data);
+            $location = "Forecast weather in " .$city. "(" .$country. "): \n";
+            for ($day = 0; $day <= 2; $day++)
+            {
+                $date = getDateNumber($data, $day);
+                $avgTemp = getAverageTemperature($data, $day);
+                $avgHumidity = $data['forecast']['forecastday'][$day]['day']['avghumidity'];
+                $discr = getWeatherDescription($data, $day);
+                $message = "On " .$date. ": \n
+                -Average temperature: " . $avgTemp. " °C 
+                -Weather: " .$discr. "
+                -Humidity: " .$avgHumidity. "% \n \n";
+                $reply .= $message;          
+            }
+            return $location .= $reply;
+        }
+        else
+        {
+            return "error";
+        }
     }

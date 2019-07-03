@@ -122,18 +122,21 @@ use Telegram\Bot\Api;
         $data = getWeatherData($city);
         if ($city = $data['location']['name'])
         {
+            $country = $data['location']['country'];
+            $location = "Forecast weather in " .$city. "(" .$country. "): \n";
             for ($i = 0; $i <= 2; $i++)
             {
-                $country = $data['location']['country'];
+                $date = $data['forecast']['forecastday'][$i]['date'];
                 $avgTemp = $data['forecast']['forecastday'][$i]['day']['avgtemp_c'];
                 $avgHumidity = $data['forecast']['forecastday'][$i]['day']['avghumidity'];
                 $discr = $data['forecast']['forecastday'][$i]['day']['condition']['text'];
-                $reply = "Forecast weather in " .$city. "(" .$country. "): \n
+                $reply = "On " .$date. ": \n
                 -Average temperature: " . $avgTemp. " °C 
                 -Weather: " .$discr. "
                 -Humidity: " .$avgHumidity. "% \n \n";
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+                $message .= $reply;        
             }
+            return $location .= $message;
         }
         else
         {

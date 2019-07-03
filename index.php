@@ -13,7 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
+    $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад в главное меню"]];
 
  
     if($text)
@@ -40,13 +40,13 @@ use Telegram\Bot\Api;
         elseif ($text == "Узнать погоду")
         {
             $reply = "Выберите опцию из меню";
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Избранные города")
         {
             ////////db
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_city, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_city, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Текущая погода")
@@ -57,7 +57,7 @@ use Telegram\Bot\Api;
                 "commands" => "currentWeather",
                 "user_id" => $chat_id
             ];
-            $id = addCommand($db, $data);
+            addCommand($db, $data);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
         }
         elseif ($text == "Прогноз")
@@ -69,11 +69,15 @@ use Telegram\Bot\Api;
                 "commands" => "forecastWeather",
                 "user_id" => $chat_id
             ];
-            $id = addCommand($db, $data);
+            addCommand($db, $data);
         }
         elseif ($text == "Добавить город")
         {
             ////////db
+        }
+        elseif ($text == "Назад в главное меню")
+        {
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
         else
         {
@@ -126,7 +130,32 @@ use Telegram\Bot\Api;
       }
     }
 
-    
+    function getForecastWeather(string $city): string
+    {     
+        $data = getWeatherData($city);
+        if ($city = getCity($data))
+        {
+            $country = getCountry($data);
+            $location = "Forecast weather in " .$city. "(" .$country. "): \n";
+            for ($day = 0; $day <= 2; $day++)
+            {
+                $date = getDateNumber($data, $day);
+                $avgTemp = getAverageTemperature($data, $day);
+                $avgHumidity = $data['forecast']['forecastday'][$day]['day']['avghumidity'];
+                $discr = getWeatherDescription($data, $day);
+                $message = "On " .$date. ": \n
+                -Average temperature: " . $avgTemp. " °C 
+                -Weather: " .$discr. "
+                -Humidity: " .$avgHumidity. "% \n \n";
+                $reply .= $message;          
+            }
+            return $location .= $reply;
+        }
+        else
+        {
+            return null;
+        }
+    }
     register_shutdown_function(function () {
         http_response_code(200);
     });

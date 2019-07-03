@@ -80,12 +80,20 @@ use Telegram\Bot\Api;
             if (getUserCommand($db, 'currentWeather') == 'currentWeather')
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
+                if (null)
+                {
+                    $reply = "Город не найден";
+                }
                 removeUserCommand($db, "currentWeather");
             } 
             if (getUserCommand($db, 'forecastWeather') == 'forecastWeather')
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]);
                 removeUserCommand($db, "forecastWeather");
+                if (null)
+                {
+                    $reply = "Город не найден";
+                }
             }     
         }        
     }
@@ -95,14 +103,13 @@ use Telegram\Bot\Api;
     function getCurrentWeather(string $city): string {
       $data = getWeatherData($city);
       $temp = getTemperature($data);
-      $feelsTemp =  $data['current']['feelslike_c'];
-      $humidity = $data['current']['humidity'];
-      $country =  $data['location']['country'];
-      $discr =  $data['current']['condition']['text'];
-      $cloud =  $data['current']['cloud'];
-      $pressure =  $data['current']['pressure_mb'];
-
-      if ($city = $data['location']['name'])
+      $feelsTemp = getFeelTemperature($data);
+      $humidity = getHumidity($data);
+      $country = getCountry($data);
+      $discr =  getWeatherDescription($data);
+      $cloud =  getClouds($data);
+      $pressure =  getPressure($data);
+      if ($city = getCity($data))
       {
            return "Current weather in " .$city. "(" .$country. "): \n
            -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
@@ -113,16 +120,16 @@ use Telegram\Bot\Api;
       }
       else
       {
-            return 'Не найдено';
+            return null;
       }
     }
 
     function getForecastWeather(string $city): string
     {     
         $data = getWeatherData($city);
-        if ($city = $data['location']['name'])
+        if ($city = getCity($data))
         {
-            $country = $data['location']['country'];
+            $country = getCountry($data);
             $location = "Forecast weather in " .$city. "(" .$country. "): \n";
             for ($i = 0; $i <= 2; $i++)
             {
@@ -130,13 +137,14 @@ use Telegram\Bot\Api;
                 $avgTemp = $data['forecast']['forecastday'][$i]['day']['avgtemp_c'];
                 $avgHumidity = $data['forecast']['forecastday'][$i]['day']['avghumidity'];
                 $discr = $data['forecast']['forecastday'][$i]['day']['condition']['text'];
-                $reply = "On " .$date. ": \n
+                $message = "On " .$date. ": \n
                 -Average temperature: " . $avgTemp. " °C 
                 -Weather: " .$discr. "
                 -Humidity: " .$avgHumidity. "% \n \n";
-                $message .= $reply;        
+                $reply .= $message;            
             }
-            return $location .= $message;
+            echo $reply;
+            return $location .= $reply;
         }
         else
         {
@@ -144,8 +152,7 @@ use Telegram\Bot\Api;
         }
     }
 
-    getForecastWeather('Cape');
-
+    getForecastWeather("Moscow");
     register_shutdown_function(function () {
         http_response_code(200);
     });

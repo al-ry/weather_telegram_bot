@@ -126,34 +126,7 @@ use Telegram\Bot\Api;
       }
     }
 
-    function getForecastWeather(string $city): string
-    {     
-        $data = getWeatherData($city);
-        if ($city = getCity($data))
-        {
-            $country = getCountry($data);
-            $location = "Forecast weather in " .$city. "(" .$country. "): \n";
-            for ($day = 0; $day <= 2; $day++)
-            {
-                $date = getDateNumber($data, $day);
-                $avgTemp = getAverageTemperature($data, $day);
-                $avgHumidity = $data['forecast']['forecastday'][$day]['day']['avghumidity'];
-                $discr = getWeatherDescription($data, $day);
-                $message = "On " .$date. ": \n
-                -Average temperature: " . $avgTemp. " °C 
-                -Weather: " .$discr. "
-                -Humidity: " .$avgHumidity. "% \n \n";
-                $reply .= $message;          
-            }
-            return $location .= $reply;
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    getForecastWeather("Moscow");
+    
     register_shutdown_function(function () {
         http_response_code(200);
     });

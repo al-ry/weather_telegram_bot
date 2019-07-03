@@ -90,7 +90,7 @@ use Telegram\Bot\Api;
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 removeUserCommand($db, "currentWeather");
             } 
-            if (getUserCommand($db, 'forecastWeather') == 'forecastWeather')
+            if (!getUserCommand($db, 'forecastWeather'))
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]);
                 removeUserCommand($db, "forecastWeather");

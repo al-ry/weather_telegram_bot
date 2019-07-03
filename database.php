@@ -11,9 +11,9 @@ function initDB(): MysqliDb
     return new MysqliDb (DB_HOST, DB_USER, DB_PASS, DB_NAME);
 }
 
-function removeUserCommand(MysqliDb $db, string $command): void
+function removeUserCommand(MysqliDb $db, string $user): void
 {
-    $db->where ("commands", $command);
+    $db->where ("user_id", $user);
     $db->delete(DB_NAME . '.bot_commands');
 }
 

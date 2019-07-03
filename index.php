@@ -87,28 +87,7 @@ use Telegram\Bot\Api;
         }
         else
         {
-            if (!getUserCommand($db, "addCity", "city"))
-            {
-                array_push($keyboard_city, $text);
-                removeUserCommand($db, "addCity");
-            }       		
-            if (!getUserCommand($db, "currentWeather", "bot_command"))
-            {
-                if (null)
-                {
-                    $reply = "Город не найден";
-                } 
-                removeUserCommand($db, "currentWeather");
-            } 
-            if (!getUserCommand($db, 'forecastWeather', "bot_command"))
-            {   
-                removeUserCommand($db, "forecastWeather");
-                if (null)
-                {
-                    $reply = "Город не найден";
-                }
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            }     
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text) ]);
         }        
     }
 

@@ -106,8 +106,7 @@ use Telegram\Bot\Api;
 
 
     function getCurrentWeather(string $city): string {
-      $data = getWeatherData($city);
-    
+      $data = getWeatherData($city); 
       if ($city == getCity($data))
       {
             $temp = getTemperature($data);
@@ -133,7 +132,7 @@ use Telegram\Bot\Api;
     function getForecastWeather(string $city): string
     {     
         $data = getWeatherData($city);
-        if ($city = getCity($data))
+        if ($city == getCity($data))
         {
             $country = getCountry($data);
             $location = "Forecast weather in " .$city. "(" .$country. "): \n";

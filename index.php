@@ -6,10 +6,7 @@ require_once('weatherapi.php');
 require_once('database.php');
 use Telegram\Bot\Api;
 
-    $test = new MysqliDb('127.0.0.1', 'root', '', '');
     $db = initDB();
-
- 
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользовател
     $text = $result["message"]["text"]; //Текст сообщения
@@ -17,6 +14,8 @@ use Telegram\Bot\Api;
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад\xE2\x9D\x8C"]];
+
+ 
     if($text)
     {
         if ($text == "/start")
@@ -85,25 +84,23 @@ use Telegram\Bot\Api;
             } 
             if (getUserCommand($db, 'forecastWeather') == 'forecastWeather')
             {
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]);
                 removeUserCommand($db, "forecastWeather");
             }     
         }        
     }
 
-    $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=Paris";
-    $weatherData = file_get_contents($api);
-    $weatherData = json_decode($weatherData, true);
-    echo ' <pre> ' . print_r($weatherData) . " </pre>";
+
 
     function getCurrentWeather(string $city): string {
       $data = getWeatherData($city);
       $temp = getTemperature($data);
-      $feelslike_temp = $get_arr['current']['feelslike_c'];
-      $humidity = $get_arr['current']['humidity'];
-      $country = $get_arr['location']['country'];
-      $discr = $get_arr['current']['condition']['text'];
-      $cloud = $get_arr['current']['cloud'];
-      $pressure = $get_arr['current']['pressure_mb'];
+      $feelsTemp =  $data['current']['feelslike_c'];
+      $humidity = $data['current']['humidity'];
+      $country =  $data['location']['country'];
+      $discr =  $data['current']['condition']['text'];
+      $cloud =  $data['current']['cloud'];
+      $pressure =  $data['current']['pressure_mb'];
 
       if ($city = $data['location']['name'])
       {
@@ -120,6 +117,28 @@ use Telegram\Bot\Api;
       }
     }
 
+    function getForecastWeather(string $city): string
+    {     
+        $data = getWeatherData($city);
+        if ($city = $data['location']['name'])
+        {
+            for ($i = 0; $i <= 2; $i++)
+            {
+                $country = $data['location']['country'];
+                $avgTemp = $data['forecast']['forecastday'][$i]['day']['avgtemp_c'];
+                $avgHumidity = $data['forecast']['forecastday'][$i]['day']['avghumidity'];
+                $discr = $data['forecast']['forecastday'][$i]['day']['condition']['text'];
+                return "Forecast weather in " .$city. "(" .$country. "): \n
+                -Average temperature: " . $avgTemp. " °C 
+                -Weather: " .$discr. "
+                -Humidity: " .$avgHumidity. "% \n \n";
+            } 
+        }
+        else
+        {
+            return "Город или прогноз не найден";
+        }
+    }
 
 
     register_shutdown_function(function () {

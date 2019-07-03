@@ -22,11 +22,10 @@ function addCommand(MysqliDb $db, array $data): void
     $db->insert(DB_NAME . '.bot_commands', $data);
 }
 
-function getUserCommand(MysqliDb $db, string $command): string
+function getUserCommand(MysqliDb $db, string $command): array
 {
     $db->where ("commands", $command);
-    $getDataDB = $db->getOne (DB_NAME . ".bot_commands"); 
-    return $getDataDB['commands']; 
+    return $db->getOne (DB_NAME . ".bot_commands"); 
 }
 
 function addNameCommand(MysqliDb $db, string $command): array

@@ -82,7 +82,7 @@ use Telegram\Bot\Api;
         {
             if (!getUserCommand($db, "currentWeather"))
             {
-                
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text) ]);
                 if (null)
                 {
                     $reply = "Город не найден";
@@ -92,7 +92,7 @@ use Telegram\Bot\Api;
             } 
             if (!getUserCommand($db, 'forecastWeather'))
             {   
-                
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text) ]);
                 removeUserCommand($db, "forecastWeather");
                 if (null)
                 {
@@ -129,18 +129,11 @@ use Telegram\Bot\Api;
         }
         else
         {
-              return null;
-              echo 'error';
+              return "error";
         }  
       }
-      else
-      {
-          return null;
-      }
+
     }
-
-
-    
 
     function getForecastWeather(?string $city): ?string {
         if  (strlen($city) != 0)
@@ -166,12 +159,8 @@ use Telegram\Bot\Api;
             }
             else
             {
-                return null;
+                return "error";
             }
-        }
-        else
-        {
-            return null;
         }
     }
 

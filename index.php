@@ -87,12 +87,12 @@ use Telegram\Bot\Api;
                 {
                     $reply = "Город не найден";
                 }
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text) ]);
+                
                 removeUserCommand($db, "currentWeather");
             } 
             if (!getUserCommand($db, 'forecastWeather'))
             {   
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text) ]);
+                
                 removeUserCommand($db, "forecastWeather");
                 if (null)
                 {

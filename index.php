@@ -87,18 +87,22 @@ use Telegram\Bot\Api;
         {
             if (!getUserCommand($db, "addCity"))
             {
-                $data = getWeatherData($text); 
+                $cityData = getWeatherData($text); 
                 $data = [
                     "city" => $text,
                     "user_id" => $chat_id
                 ];
-                if ($text == getCity($data))
+                if ($text == getCity($cityData))
                 {
                     addCity($db, $data);
                     array_push($keyboard_city, $text);
                     $reply = "Город успешно добавлен";
-                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 }
+                else
+                {
+                    $reply = "Город введен неверно";
+                }
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }       		
             if (!getUserCommand($db, "currentWeather"))
             {

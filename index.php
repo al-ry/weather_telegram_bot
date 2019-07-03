@@ -87,12 +87,12 @@ use Telegram\Bot\Api;
         }
         else
         {
-            if (!getUserCommand($db, "addCity"))
+            if (!getUserCommand($db, "addCity", "city"))
             {
                 array_push($keyboard_city, $text);
                 removeUserCommand($db, "addCity");
             }       		
-            if (!getUserCommand($db, "currentWeather"))
+            if (!getUserCommand($db, "currentWeather", "bot_command"))
             {
                 if (null)
                 {
@@ -100,7 +100,7 @@ use Telegram\Bot\Api;
                 } 
                 removeUserCommand($db, "currentWeather");
             } 
-            if (!getUserCommand($db, 'forecastWeather'))
+            if (!getUserCommand($db, 'forecastWeather', "bot_command"))
             {   
                 removeUserCommand($db, "forecastWeather");
                 if (null)
@@ -113,55 +113,54 @@ use Telegram\Bot\Api;
     }
 
     function getCurrentWeather(string $city): string {
-			$data = getWeatherData($city); 
-			if ($city == getCity($data))
-			{
-				$temp = getTemperature($data);
-				$feelsTemp = getFeelTemperature($data);
-				$humidity = getHumidity($data);
-				$country = getCountry($data);
-				$discr =  getWeatherDescription($data);
-				$cloud =  getClouds($data);
-				$pressure =  getPressure($data);
-				$reply =  "Current weather in " .$city. "(" .$country. "): \n
-		  	-Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
-		  	-Weather: " .$discr. "
-		  	-Humidity: " .$humidity. "%
-		  	-Pressure: " .floor($pressure / 1.333). " mmHg
-		  	-Cloudiness: " .$cloud. "%";
-		  	return $reply;
-		  	echo $reply;
-			}
-			else
-			{
-						return "error";
-			}  
+        $data = getWeatherData($city); 
+        if ($city == getCity($data))
+        {
+            $temp = getTemperature($data);
+            $feelsTemp = getFeelTemperature($data);
+            $humidity = getHumidity($data);
+            $country = getCountry($data);
+            $discr =  getWeatherDescription($data);
+            $cloud =  getClouds($data);
+            $pressure =  getPressure($data);
+            $reply =  "Current weather in " .$city. "(" .$country. "): \n
+           -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
+           -Weather: " .$discr. "
+           -Humidity: " .$humidity. "%
+           -Pressure: " .floor($pressure / 1.333). " mmHg
+           -Cloudiness: " .$cloud. "%";
+           return $reply;
+        }
+        else
+        {
+            return "error";
+        }  
     }
 
     function getForecastWeather(string $city): string {
-			$data = getWeatherData($city);
-			if ($city == getCity($data))
-			{
-					$country = getCountry($data);
-					$location = "Forecast weather in " .$city. "(" .$country. "): \n";
-					for ($day = 0; $day <= 2; $day++)
-					{
-							$date = getDateNumber($data, $day);
-							$avgTemp = getAverageTemperature($data, $day);
-							$avgHumidity = $data['forecast']['forecastday'][$day]['day']['avghumidity'];
-							$discr = getWeatherDescription($data, $day);
-							$message = "On " .$date. ": \n
-							-Average temperature: " . $avgTemp. " °C 
-							-Weather: " .$discr. "
-							-Humidity: " .$avgHumidity. "% \n \n";
-							$reply .= $message;          
-					}
-					return $location .= $reply;
-			}
-			else
-			{
-					return "error";
-			}
+        $data = getWeatherData($city);
+        if ($city == getCity($data))
+        {
+            $country = getCountry($data);
+            $location = "Forecast weather in " .$city. "(" .$country. "): \n";
+            for ($day = 0; $day <= 2; $day++)
+            {
+                $date = getDateNumber($data, $day);
+                $avgTemp = getAverageTemperature($data, $day);
+                $avgHumidity = $data['forecast']['forecastday'][$day]['day']['avghumidity'];
+                $discr = getWeatherDescription($data, $day);
+                $message = "On " .$date. ": \n
+                -Average temperature: " . $avgTemp. " °C 
+                -Weather: " .$discr. "
+                -Humidity: " .$avgHumidity. "% \n \n";
+                $reply .= $message;          
+            }
+            return $location .= $reply;
+        }
+        else
+        {
+            return "error";
+        }
     }
 
     register_shutdown_function(function () {

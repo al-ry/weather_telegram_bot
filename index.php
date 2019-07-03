@@ -77,7 +77,7 @@ use Telegram\Bot\Api;
                 "commands" => "addCity",
                 "user_id" => $chat_id
             ];
-            addCity($db, $data);
+            addCommand($db, $data);
         }
         elseif ($text == "Назад в главное меню")
         {

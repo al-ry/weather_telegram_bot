@@ -37,7 +37,7 @@ function addNameCommand(MysqliDb $db, string $command): array
     return $data; 
 }
 
-function addCity(MysqliDb $db, string $city): void
+function addCity(MysqliDb $db, array $data): void
 {
     $db->insert(DB_NAME . '.city', $data);
 }

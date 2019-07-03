@@ -42,7 +42,7 @@ function getWeatherDescription(array $data): string
     return $data['forecast']['forecastday']['1']['day']['condition']['text'];
 }
 
-function getCity(array $data): ?string
+function getCity(?array $data = null): ?string
 {
     return $data['location']['name'];
 }

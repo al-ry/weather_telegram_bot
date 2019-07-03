@@ -14,7 +14,7 @@ use Telegram\Bot\Api;
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад в главное меню"]];
-
+    $keyboard_city = [];
     if($text)
     {
         if ($text == "/start")
@@ -73,6 +73,13 @@ use Telegram\Bot\Api;
         elseif ($text == "Добавить город")
         {
             ////////db
+            $reply = "Введите город, который желаете добавить"; 
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $data = [
+                "commands" => "addCity",
+                "user_id" => $chat_id
+            ];
+            addCommand($db, $data);
         }
         elseif ($text == "Назад в главное меню")
         {
@@ -80,9 +87,13 @@ use Telegram\Bot\Api;
         }
         else
         {
+            if (!getUserCommand($db, "addCity"))
+            {
+                array_push($keyboard_city, $text);
+                removeUserCommand($db, "addCity");
+            }       		
             if (!getUserCommand($db, "currentWeather"))
             {
-							$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 if (null)
                 {
                     $reply = "Город не найден";
@@ -91,7 +102,6 @@ use Telegram\Bot\Api;
             } 
             if (!getUserCommand($db, 'forecastWeather'))
             {   
-						  	$telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]);
                 removeUserCommand($db, "forecastWeather");
                 if (null)
                 {
@@ -101,8 +111,6 @@ use Telegram\Bot\Api;
             }     
         }        
     }
-
-   
 
     function getCurrentWeather(string $city): string {
 			$data = getWeatherData($city); 

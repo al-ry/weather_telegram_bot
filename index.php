@@ -84,6 +84,7 @@ use Telegram\Bot\Api;
                 {
                     $reply = "Город не найден";
                 }
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
                 removeUserCommand($db, "currentWeather");
             } 
             if (getUserCommand($db, 'forecastWeather') == 'forecastWeather')
@@ -94,6 +95,7 @@ use Telegram\Bot\Api;
                 {
                     $reply = "Город не найден";
                 }
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             }     
         }        
     }
@@ -131,24 +133,23 @@ use Telegram\Bot\Api;
         {
             $country = getCountry($data);
             $location = "Forecast weather in " .$city. "(" .$country. "): \n";
-            for ($i = 0; $i <= 2; $i++)
+            for ($day = 0; $day <= 2; $day++)
             {
-                $date = $data['forecast']['forecastday'][$i]['date'];
-                $avgTemp = $data['forecast']['forecastday'][$i]['day']['avgtemp_c'];
-                $avgHumidity = $data['forecast']['forecastday'][$i]['day']['avghumidity'];
-                $discr = $data['forecast']['forecastday'][$i]['day']['condition']['text'];
+                $date = getDateNumber($data, $day);
+                $avgTemp = getAverageTemperature($data, $day);
+                $avgHumidity = $data['forecast']['forecastday'][$day]['day']['avghumidity'];
+                $discr = getWeatherDescription($data, $day);
                 $message = "On " .$date. ": \n
                 -Average temperature: " . $avgTemp. " °C 
                 -Weather: " .$discr. "
                 -Humidity: " .$avgHumidity. "% \n \n";
-                $reply .= $message;            
+                $reply .= $message;          
             }
-            echo $reply;
             return $location .= $reply;
         }
         else
         {
-            return "Город или прогноз не найден";
+            return null;
         }
     }
 

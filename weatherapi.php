@@ -47,6 +47,19 @@ function getCity(array $data): string
     return $data['location']['name'];
 }
 
+function getAverageTemperature(array $data,int $day): string
+{
+    return $data['forecast']['forecastday'][$day]['day']['avgtemp_c'];
+}
 
+function getDateNumber(array $data,int $day): string
+{
+    return  $data['forecast']['forecastday'][$day]['date'];
+}
+
+function getAverageHumidity(array $data,int $day): string
+{
+    return $data['forecast']['forecastday'][$day]['day']['avghumidity'];
+}
 
 

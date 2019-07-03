@@ -8,7 +8,8 @@ use Telegram\Bot\Api;
 
     $test = new MysqliDb('127.0.0.1', 'root', '', '');
     $db = initDB();
-    
+
+ 
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользовател
     $text = $result["message"]["text"]; //Текст сообщения
@@ -51,6 +52,7 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Текущая погода")
         {
+            removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
             $data = [
                 "commands" => "currentWeather",
@@ -61,6 +63,7 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Прогноз")
         {
+            removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $data = [
@@ -87,10 +90,14 @@ use Telegram\Bot\Api;
         }        
     }
 
+    $api = "http://api.apixu.com/v1/current.json?key=bd8f380296394c11b8053241192806&q=Paris";
+    $weatherData = file_get_contents($api);
+    $weatherData = json_decode($weatherData, true);
+    echo ' <pre> ' . print_r($weatherData) . " </pre>";
+
     function getCurrentWeather(string $city): string {
       $data = getWeatherData($city);
       $temp = getTemperature($data);
-      $feelsTemp = 
       $feelslike_temp = $get_arr['current']['feelslike_c'];
       $humidity = $get_arr['current']['humidity'];
       $country = $get_arr['location']['country'];
@@ -101,7 +108,7 @@ use Telegram\Bot\Api;
       if ($city = $data['location']['name'])
       {
            return "Current weather in " .$city. "(" .$country. "): \n
-           -Temperature: " .$temp_c. " °C , feels like " .$feelslike_temp. " °C
+           -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
            -Weather: " .$discr. "
            -Humidity: " .$humidity. "%
            -Pressure: " .floor($pressure / 1.333). " mmHg

@@ -15,7 +15,6 @@ use Telegram\Bot\Api;
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад в главное меню"]];
 
- 
     if($text)
     {
         if ($text == "/start")
@@ -81,7 +80,7 @@ use Telegram\Bot\Api;
         }
         else
         {
-            if (getUserCommand($db, 'currentWeather') == 'currentWeather')
+            if (getUserCommand($db, "currentWeather") == "currentWeather")
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 if (null)

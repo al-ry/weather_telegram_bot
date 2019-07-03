@@ -87,6 +87,11 @@ use Telegram\Bot\Api;
         {
             if (!getUserCommand($db, "addCity"))
             {
+                $data = [
+                    "city" => $text,
+                    "user_id" => $chat_id
+                ];
+                addCity($db, $data);
                 array_push($keyboard_city, $text);
                 $reply = "Город успешно добавлен";
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);

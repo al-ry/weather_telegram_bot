@@ -110,13 +110,13 @@ use Telegram\Bot\Api;
     
       if ($city == getCity($data))
       {
-        $temp = getTemperature($data);
-        $feelsTemp = getFeelTemperature($data);
-        $humidity = getHumidity($data);
-        $country = getCountry($data);
-        $discr =  getWeatherDescription($data);
-        $cloud =  getClouds($data);
-        $pressure =  getPressure($data);
+            $temp = getTemperature($data);
+            $feelsTemp = getFeelTemperature($data);
+            $humidity = getHumidity($data);
+            $country = getCountry($data);
+            $discr =  getWeatherDescription($data);
+            $cloud =  getClouds($data);
+            $pressure =  getPressure($data);
            return "Current weather in " .$city. "(" .$country. "): \n
            -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
            -Weather: " .$discr. "

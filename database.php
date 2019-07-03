@@ -22,10 +22,10 @@ function addCommand(MysqliDb $db, array $data): void
     $db->insert(DB_NAME . '.bot_commands', $data);
 }
 
-function getUserCommand(MysqliDb $db, string $command, string $tableName): ?array
+function getUserCommand(MysqliDb $db, string $command): ?array
 {
     $db->where ("commands", $command);
-    return $db->getOne (DB_NAME . ".". $tableName); 
+    return $db->getOne (DB_NAME . ".bot_command"); 
 }
 
 function addNameCommand(MysqliDb $db, string $command): array
@@ -35,4 +35,9 @@ function addNameCommand(MysqliDb $db, string $command): array
         "user_id" => $chat_id
     ];
     return $data; 
+}
+
+function addCity(MysqliDb $db, string $city): void
+{
+    $db->insert(DB_NAME . '.city', $data);
 }

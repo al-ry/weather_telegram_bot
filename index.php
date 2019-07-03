@@ -73,6 +73,11 @@ use Telegram\Bot\Api;
             ////////db
             $reply = "Введите город, который желаете добавить"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $data = [
+                "commands" => "addCity",
+                "user_id" => $chat_id
+            ];
+            addCommand($db, $data);
         }
         elseif ($text == "Назад в главное меню")
         {
@@ -80,7 +85,17 @@ use Telegram\Bot\Api;
         }
         else
         {
-      		
+            if (!getUserCommand($db, "addCity"))
+            {
+                $data = [
+                    "city" => $text,
+                    "user_id" => $chat_id
+                ];
+                addCity($db, $data);
+                array_push($keyboard_city, $text);
+                $reply = "Город успешно добавлен";
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            }       		
             if (!getUserCommand($db, "currentWeather"))
             {
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);

@@ -95,6 +95,7 @@ use Telegram\Bot\Api;
                 array_push($keyboard_city, $text);
                 $reply = "Город успешно добавлен";
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+                removeUserCommand($db, "addCity");
             }       		
             if (!getUserCommand($db, "currentWeather"))
             {
@@ -136,6 +137,9 @@ use Telegram\Bot\Api;
             return "error";
         }  
     }
+
+    $test = getWeatherData("Paris");
+    echo getCity($test);
 
     function getForecastWeather(string $city): string {
         $data = getWeatherData($city);

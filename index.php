@@ -36,55 +36,6 @@ use Telegram\Bot\Api;
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
-        elseif ($text == "Узнать погоду")
-        {
-            $reply = "Выберите опцию из меню";
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-        }
-        elseif ($text == "Избранные города")
-        {
-            ////////db
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_city, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-        }
-        elseif ($text == "Текущая погода")
-        {
-            removeUserCommand($db, $chat_id);
-            $reply = "Введите город"; 
-            $data = [
-                "commands" => "currentWeather",
-                "user_id" => $chat_id
-            ];
-            addCommand($db, $data);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-        }
-        elseif ($text == "Прогноз")
-        {
-            removeUserCommand($db, $chat_id);
-            $reply = "Введите город"; 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $data = [
-                "commands" => "forecastWeather",
-                "user_id" => $chat_id
-            ];
-            addCommand($db, $data);
-        }
-        elseif ($text == "Добавить город")
-        {
-            ////////db
-            $reply = "Введите город, который желаете добавить"; 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $data = [
-                "commands" => "addCity",
-                "user_id" => $chat_id
-            ];
-            addCommand($db, $data);
-        }
-        elseif ($text == "Назад в главное меню")
-        {
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-        }
         else
         {
  

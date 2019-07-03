@@ -155,6 +155,9 @@ use Telegram\Bot\Api;
             return null;
         }
     }
+
+    var_dump(getUserCommand($db, 'forecastWeather'));
+
     register_shutdown_function(function () {
         http_response_code(200);
     });

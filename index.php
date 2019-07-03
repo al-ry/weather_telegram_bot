@@ -125,4 +125,3 @@ use Telegram\Bot\Api;
     register_shutdown_function(function () {
         http_response_code(200);
     });
-    error_log(var_export($myVariable, true));

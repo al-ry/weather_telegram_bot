@@ -68,20 +68,9 @@ use Telegram\Bot\Api;
             ];
             addCommand($db, $data);
         }
-        elseif ($text == "Добавить город")
-        {
-            ////////db
-            $reply = "Введите город, который желаете добавить"; 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $data = [
-                "commands" => "addCity",
-                "user_id" => $chat_id
-            ];
-            addCommand($db, $data);
-        }
+
         else
         {
-      		
             if (!getUserCommand($db, "currentWeather"))
             {
                 
@@ -98,10 +87,7 @@ use Telegram\Bot\Api;
             }  
         }        
     }
-    register_shutdown_function(function () {
-        http_response_code(200);
-    });
-
+    
     function getCurrentWeather(string $city): string {
         $data = getWeatherData($city); 
         if ($city == getCity($data))

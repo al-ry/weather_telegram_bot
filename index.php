@@ -13,7 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"];
+    $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
     $keyboard_city = [];
     if($text)
     {

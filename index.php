@@ -81,7 +81,8 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Назад в главное меню")
         {
-            
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         else
         {

@@ -73,12 +73,14 @@ use Telegram\Bot\Api;
         {
             if (strlen($text) != 0)
             {
+                $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
                 if (!getUserCommand($db, "currentWeather"))
                 {
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text) ]);
                     removeUserCommand($db, "currentWeather");
                 } 
-                if (!getUserCommand($db, 'forecastWeather'))
+                if (!getUserCommand($db, "forecastWeather"))
                 {  
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text) ]);          
                     removeUserCommand($db, "forecastWeather");

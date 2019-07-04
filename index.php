@@ -13,7 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад в главное меню"]];
+    $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
     $keyboard_city = [];
     if($text)
     {
@@ -81,7 +81,7 @@ use Telegram\Bot\Api;
         }
         elseif ($text == "Назад в главное меню")
         {
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         else
@@ -103,14 +103,14 @@ use Telegram\Bot\Api;
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
                 removeUserCommand($db, "currentWeather");
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id, 'reply_markup' => $reply_markup ]);
             } 
             if (!getUserCommand($db, 'forecastWeather'))
             {   
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]);
                 removeUserCommand($db, "forecastWeather");
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+                $telegram->sendMessage([ 'chat_id' => $chat_id,  'reply_markup' => $reply_markup ]);
             }  
         }        
     }

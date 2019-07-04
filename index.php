@@ -13,7 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Прогноз"],["Текущая погода"]];
+    $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
     $keyboard_city = [];
     if($text)
     {
@@ -42,10 +42,6 @@ use Telegram\Bot\Api;
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
-        elseif ($text == "Избранные города")
-        {
-            ////////db
-        }
         elseif ($text == "Текущая погода")
         {
             removeUserCommand($db, $chat_id);
@@ -68,7 +64,10 @@ use Telegram\Bot\Api;
             ];
             addCommand($db, $data);
         }
-
+        elseif ($text == "Избранные города")
+        {
+            ////////db
+        }
         else
         {
             if (strlen($text) != 0)
@@ -77,12 +76,10 @@ use Telegram\Bot\Api;
                 if (!getUserCommand($db, "currentWeather"))
                 {
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
-                    removeUserCommand($db, "currentWeather");
                 } 
                 if (!getUserCommand($db, "forecastWeather"))
                 {  
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);          
-                    removeUserCommand($db, "forecastWeather");
                 }  
             }
         }        

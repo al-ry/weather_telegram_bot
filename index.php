@@ -73,15 +73,23 @@ use Telegram\Bot\Api;
         {
             if (strlen($text) != 0)
             {
-                $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+                $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
                 if (!getUserCommand($db, "currentWeather"))
                 {
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
+                    if (null)
+                    {
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Город не найден"]);
+                    }
                     removeUserCommand($db, "currentWeather");
                 } 
                 if (!getUserCommand($db, "forecastWeather"))
                 {  
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);          
+                    if (null)
+                    {
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Город не найден"]);
+                    }
                     removeUserCommand($db, "forecastWeather");
                 }  
             }
@@ -138,6 +146,6 @@ use Telegram\Bot\Api;
         }
         else
         {
-            return "error";
+            return null;
         }
     }

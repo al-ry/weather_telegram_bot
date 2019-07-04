@@ -13,7 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад в главное меню"]];
+    $keyboard_forecast = [["Текущая погода"],["Прогноз"];
     $keyboard_city = [];
     if($text)
     {
@@ -78,11 +78,6 @@ use Telegram\Bot\Api;
                 "user_id" => $chat_id
             ];
             addCommand($db, $data);
-        }
-        elseif ($text == "Назад в главное меню")
-        {
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         else
         {

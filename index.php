@@ -39,7 +39,7 @@ use Telegram\Bot\Api;
         elseif ($text == "Узнать погоду")
         {
             $reply = "Выберите опцию из меню";
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Избранные города")

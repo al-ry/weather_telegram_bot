@@ -114,7 +114,8 @@ use Telegram\Bot\Api;
     });
 
     function getCurrentWeather(string $city): string {
-        $data = getWeatherData($city); 
+        $data = getWeatherData($city);
+        getCity($data); 
         if ($city == getCity($data))
         {
             $temp = getTemperature($data);

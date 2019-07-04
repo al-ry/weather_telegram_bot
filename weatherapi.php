@@ -44,7 +44,15 @@ function getWeatherDescription(array $data): string
 
 function getCity(array $data): string
 {
-    return $data['location']['name'];
+    $city = $data['location']['name'];
+    if (strlen($city) > 0)
+    {
+        return $city;
+    }
+    else
+    {
+        return "kfjdkfj";
+    }
 }
 
 function getAverageTemperature(array $data,int $day): string

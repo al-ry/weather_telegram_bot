@@ -95,14 +95,14 @@ use Telegram\Bot\Api;
             }       		
             if (!getUserCommand($db, "currentWeather"))
             {
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]);
+                
                 removeUserCommand($db, "currentWeather");
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
                 $telegram->sendMessage([ 'chat_id' => $chat_id, 'reply_markup' => $reply_markup ]);
             } 
             if (!getUserCommand($db, 'forecastWeather'))
             {   
-                $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]);
+                
                 removeUserCommand($db, "forecastWeather");
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
                 $telegram->sendMessage([ 'chat_id' => $chat_id,  'reply_markup' => $reply_markup ]);

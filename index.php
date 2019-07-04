@@ -13,7 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
+    $keyboard_forecast = [["Прогноз"],["Текущая погода"]];
     $keyboard_city = [];
     if($text)
     {
@@ -77,19 +77,11 @@ use Telegram\Bot\Api;
                 if (!getUserCommand($db, "currentWeather"))
                 {
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
-                    if (null)
-                    {
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Город не найден"]);
-                    }
                     removeUserCommand($db, "currentWeather");
                 } 
                 if (!getUserCommand($db, "forecastWeather"))
                 {  
                     $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);          
-                    if (null)
-                    {
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => "Город не найден"]);
-                    }
                     removeUserCommand($db, "forecastWeather");
                 }  
             }
@@ -117,7 +109,7 @@ use Telegram\Bot\Api;
         }
         else
         {
-            return null;
+            return "Город не найден";
         }  
     }
 
@@ -146,6 +138,6 @@ use Telegram\Bot\Api;
         }
         else
         {
-            return null;
-        }
+            return "Город не найден";
+        } 
     }

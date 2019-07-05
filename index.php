@@ -84,7 +84,7 @@ use Telegram\Bot\Api;
                 } 
                 if (!getUserCommand($db, "forecastWeather"))
                 {  
-                    if (!getForecastWeather($text) )
+                    if (!getForecastWeather($text))
                     {
                         $reply = "Город не найден";
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);

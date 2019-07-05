@@ -1,6 +1,6 @@
 <?php
 
-function getWeatherData(?string $city): array
+function getWeatherData(string $city): ?array
 {
     if (strlen($city) != 0)
     {
@@ -45,7 +45,7 @@ function getWeatherDescription(array $data): string
     return $data['forecast']['forecastday']['1']['day']['condition']['text'];
 }
 
-function getCity(array $data): string
+function getCity(?array $data): ?string
 {
     return $data['location']['name'];
 }

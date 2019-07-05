@@ -8,6 +8,10 @@ function getWeatherData(string $city): ?array
         $weatherData = file_get_contents($api);
         return json_decode($weatherData, true);
     }
+    else
+    {
+        return null;
+    }
 }
 
 function getTemperature(array $data): string

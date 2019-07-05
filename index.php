@@ -114,7 +114,7 @@ use Telegram\Bot\Api;
         }
         else
         {
-            return null;
+            return "null";
         }  
     }
 
@@ -142,6 +142,6 @@ use Telegram\Bot\Api;
         }
         else
         {
-            return null;
+            return "null";
         } 
     }

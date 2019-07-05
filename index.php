@@ -110,9 +110,6 @@ use Telegram\Bot\Api;
         }  
     }
 
-    $test = getWeatherData("Paris");
-    echo getCity($test);
-
     function getForecastWeather(string $city): string {
         $data = getWeatherData($city);
         if ($city == getCity($data))
@@ -123,7 +120,7 @@ use Telegram\Bot\Api;
             {
                 $date = getDateNumber($data, $day);
                 $avgTemp = getAverageTemperature($data, $day);
-                $avgHumidity = $data['forecast']['forecastday'][$day]['day']['avghumidity'];
+                $avgHumidity = getAverageHumidity($data, $day);
                 $discr = getWeatherDescription($data, $day);
                 $message = "On " .$date. ": \n
                 -Average temperature: " . $avgTemp. " °C 

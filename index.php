@@ -83,6 +83,7 @@ use Telegram\Bot\Api;
                     {
                         $reply = "Город не найден";
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
+                    }
                 } 
                 if (!getUserCommand($db, "forecastWeather"))
                 {  
@@ -100,17 +101,6 @@ use Telegram\Bot\Api;
         }        
     }
 
-
-    if (getForecastWeather(""))
-    {
-        echo "jg";
-
-    }     
-    else 
-    {
-        echo "hkh";
-
-    }  
 
     function getCurrentWeather(?string $city): ?string {
         $data = getWeatherData($city); 

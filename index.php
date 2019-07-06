@@ -81,19 +81,30 @@ use Telegram\Bot\Api;
                     {
                         removeUserCommand($db, $chat_id);
                         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
+                        if (getCurrentWeather($text) == null)
+                        {
+                            $reply = "Город не найден попробуйте снова";
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+                        }
+                        else
+                        {
+                            removeUserCommand($db, $chat_id);
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
+                        }
                     }
                     elseif ($userCommand == "forecastWeather")
                     {
-                        removeUserCommand($db, $chat_id);
                         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
+                        if (getForecastWeather($text) == null)
+                        {
+                            $reply = "Город не найден попробуйте снова";
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]); 
+                        }
+                        {
+                            removeUserCommand($db, $chat_id);
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
+                        }
                     }          
-                    else 
-                    {
-                        $reply = "Город не найден, введите снова";
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
-                    }
                 } 
             }
         }        

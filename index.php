@@ -84,21 +84,33 @@ use Telegram\Bot\Api;
                 } 
                 if (!getUserCommand($db, "forecastWeather"))
                 {  
-                    if (!getForecastWeather($text))
+                    if (getForecastWeather($text))
                     {
-                        $reply = "Город не найден";
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text]); 
                     }     
                     else 
                     {
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text]); 
+                        $reply = "Город не найден";
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                     }    
                 }  
             }
         }        
     }
 
-    function getCurrentWeather(string $city): ?string {
+
+    if (getForecastWeather(""))
+    {
+        echo "jg";
+
+    }     
+    else 
+    {
+        echo "hkh";
+
+    }  
+
+    function getCurrentWeather(?string $city): ?string {
         $data = getWeatherData($city); 
         if ($city == getCity($data))
         {
@@ -122,14 +134,6 @@ use Telegram\Bot\Api;
             return null;
         }  
     }
-
-    $api = "http://api.apixu.com/v1/forecast.json?key=bd8f380296394c11b8053241192806&q=xcxvx&days=3&lang=ru";
-    var_dump(getCurrentWeather('jhkhkjh'));
-    if (null)
-    {
-        var_dump("dfdfdf");
-    }
-    var_dump(getWeatherData('kljkljkj'));
 
     function getForecastWeather(string $city): ?string {
         $data = getWeatherData($city);

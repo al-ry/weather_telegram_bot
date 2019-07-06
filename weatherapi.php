@@ -29,7 +29,7 @@ function getHumidity(array $data): string
     return $data['current']['humidity'];
 }
 
-function getCountry(array $data): string
+function getCountry(?array $data): ?string
 {
     return $data['location']['country'];
 }
@@ -44,7 +44,7 @@ function getPressure(array $data): string
     return $data['current']['pressure_mb'];
 }
 
-function getWeatherDescription(array $data): string
+function getWeatherDescription(?array $data): ?string
 {
     return $data['forecast']['forecastday']['1']['day']['condition']['text'];
 }
@@ -54,17 +54,17 @@ function getCity(?array $data): ?string
     return $data['location']['name'];
 }
 
-function getAverageTemperature(array $data,int $day): string
+function getAverageTemperature(?array $data,?int $day): ?string
 {
     return $data['forecast']['forecastday'][$day]['day']['avgtemp_c'];
 }
 
-function getDateNumber(array $data,int $day): string
+function getDateNumber(?array $data,?int $day): ?string
 {
     return  $data['forecast']['forecastday'][$day]['date'];
 }
 
-function getAverageHumidity(array $data,int $day): string
+function getAverageHumidity(?array $data,?int $day): ?string
 {
     return $data['forecast']['forecastday'][$day]['day']['avghumidity'];
 }

@@ -97,7 +97,7 @@ use Telegram\Bot\Api;
                     }     
                     else 
                     {
-                        $reply = "Город не найден, введите снова";
+                        $reply = "Город не найден";
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                     }    
                 }  

@@ -83,7 +83,7 @@ use Telegram\Bot\Api;
                         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
                     }
-                    elseif ($userCommand == "currentWeather")
+                    elseif ($userCommand == "forecastWeather")
                     {
                         removeUserCommand($db, $chat_id);
                         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);

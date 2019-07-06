@@ -75,18 +75,20 @@ use Telegram\Bot\Api;
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
                 if (!getUserCommand($db, "currentWeather"))
                 {
-                    $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
-                    if (getCurrentWeather($text) == null)
+                    if (getCurrentWeather($text))
+                    {
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text)]); 
+                    }     
+                    else 
                     {
                         $reply = "Город не найден";
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-                    }
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                 } 
                 if (!getUserCommand($db, "forecastWeather"))
                 {  
                     if (getForecastWeather($text))
                     {
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text]); 
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]); 
                     }     
                     else 
                     {

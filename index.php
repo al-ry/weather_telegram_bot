@@ -76,20 +76,18 @@ use Telegram\Bot\Api;
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
                 if ($getUser) 
                 {
+                    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                     $userCommand = $getUser['commands'];
                     if ($userCommand == "currentWeather")
                     {
-                        removeUserCommand($db, $chat_id);
-                        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                         if (getCurrentWeather($text) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                         }
                         else
                         {
                             removeUserCommand($db, $chat_id);
-                            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
                         }
                     }
@@ -98,12 +96,11 @@ use Telegram\Bot\Api;
                         if (getForecastWeather($text) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]); 
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]); 
                         }
                         else
                         {
                             removeUserCommand($db, $chat_id);
-                            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
                         }
                     }          

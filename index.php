@@ -100,6 +100,7 @@ use Telegram\Bot\Api;
                             $reply = "Город не найден попробуйте снова";
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]); 
                         }
+                        else
                         {
                             removeUserCommand($db, $chat_id);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);

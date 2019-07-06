@@ -73,7 +73,7 @@ use Telegram\Bot\Api;
             if (strlen($text) != 0)
             {
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-                if (!getUserCommand($db, "currentWeather"))
+                if (getUserCommand($db, "currentWeather"))
                 {
                     if (getCurrentWeather($text))
                     {
@@ -87,7 +87,7 @@ use Telegram\Bot\Api;
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                     }
                 } 
-                if (!getUserCommand($db, "forecastWeather"))
+                if (getUserCommand($db, "forecastWeather"))
                 {  
                     if (getForecastWeather($text))
                     {

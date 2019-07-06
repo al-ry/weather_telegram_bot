@@ -89,12 +89,12 @@ use Telegram\Bot\Api;
                         else
                         {
                             removeUserCommand($db, $chat_id);
+                            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
                         }
                     }
                     elseif ($userCommand == "forecastWeather")
                     {
-                        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                         if (getForecastWeather($text) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
@@ -103,6 +103,7 @@ use Telegram\Bot\Api;
                         else
                         {
                             removeUserCommand($db, $chat_id);
+                            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
                         }
                     }          

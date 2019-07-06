@@ -72,7 +72,11 @@ use Telegram\Bot\Api;
         {
             if (strlen($text) != 0)
             {
+                $db->where ("user_id", $chat_id);
+                $getUser =  $db->getOne (DB_NAME . ".bot_commands"); 
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+                if ($getUser)
+                {
                 if (getUserCommand($db, "currentWeather")) 
                 {
                     if (getCurrentWeather($text))
@@ -100,15 +104,11 @@ use Telegram\Bot\Api;
                         $reply = "Город не найден";
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                     }    
-                }  
+                }
+            }  
             }
         }        
     }
-
-    var_dump(getUserCommand($db, "forecastWeather"));
-    var_dump(getUserCommand($db, "forecastWeather"));
-
-
     function getCurrentWeather(string $city): ?string {
         $data = getWeatherData($city); 
         if ($city == getCity($data))

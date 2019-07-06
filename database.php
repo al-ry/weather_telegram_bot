@@ -24,9 +24,15 @@ function addCommand(MysqliDb $db, array $data): void
 
 function getUserCommand(MysqliDb $db, string $command): ?array
 {
-    $db->where ("commands", $command);
-    return $db->getOne (DB_NAME . ".bot_commands"); 
+    $db->where ("user_id", $chat_id);
+    if ($db->getOne (DB_NAME . ".bot_commands"))
+    {
+        $db->where ("commands", $command);
+        return $db->getOne (DB_NAME . ".bot_commands"); 
+    }
 }
+
+
 
 function addNameCommand(MysqliDb $db, string $command): array
 {

@@ -91,7 +91,7 @@ use Telegram\Bot\Api;
                     }     
                     else 
                     {
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text)]); 
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $text]); 
                     }    
                 }  
             }
@@ -123,6 +123,7 @@ use Telegram\Bot\Api;
         }  
     }
 
+    $api = "http://api.apixu.com/v1/forecast.json?key=bd8f380296394c11b8053241192806&q=xcxvx&days=3&lang=ru";
     var_dump(getCurrentWeather('jhkhkjh'));
     if (null)
     {

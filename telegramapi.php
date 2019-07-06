@@ -13,7 +13,7 @@ function getText(object $result)
     return $result["message"]["text"];
 }
 
-function getUserId(array  $result): int
+function getUserId(array $result): int
 {
     return $result["message"]["chat"]["id"];
 }

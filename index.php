@@ -72,39 +72,38 @@ use Telegram\Bot\Api;
         {
             if (strlen($text) != 0)
             {
+                $getUser = getUserCommand($db, $chat_id);
                 $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
-                if (getUserCommand($db, "currentWeather")) 
+                if ($getUser) 
                 {
-                    if (getCurrentWeather($text))
+                    $userCommand = $getUser['commands'];
+                    if ($userCommand == "currentWeather")
                     {
                         removeUserCommand($db, $chat_id);
                         $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
-                    }     
+                    }
+                    elseif ($userCommand == "currentWeather")
+                    {
+                        removeUserCommand($db, $chat_id);
+                        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
+                    }          
                     else 
                     {
                         $reply = "Город не найден, введите снова";
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                     }
                 } 
-                if (getUserCommand($db, "forecastWeather"))
-                {  
-                    if (getForecastWeather($text))
-                    {
-                        removeUserCommand($db, $chat_id);
-                        $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
-                    }     
-                    else 
-                    {
-                        $reply = "Город не найден";
-                        $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
-                    }    
-                }
             }
         }        
     }
 
+    $table = getUserCommand($db, 560463324);
+    var_dump($table);
+    $userId = $table['commands'];
+    echo $userId;
+    
 
     function getCurrentWeather(string $city): ?string {
         $data = getWeatherData($city); 

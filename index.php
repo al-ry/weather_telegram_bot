@@ -87,7 +87,7 @@ use Telegram\Bot\Api;
                         $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
                     }
                 } 
-                if (!getUserCommand($db, "forecastWeather"))
+                if (getUserCommand($db, "forecastWeather"))
                 {  
                     if (getForecastWeather($text))
                     {

@@ -86,6 +86,7 @@ use Telegram\Bot\Api;
                         }
                         else
                         {
+                            addFavCity($text, $keyboard);
                             removeUserCommand($db, $chat_id);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
                         }
@@ -100,20 +101,9 @@ use Telegram\Bot\Api;
                         else
                         {
                             removeUserCommand($db, $chat_id);
+                            addFavCity($text, $keyboard);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
-                        }
-                    }
-                    elseif  ($userCommand == "addCity") 
-                    {
-                        if (addFavCity($text, $keyboard_city) == null)
-                        {
-                            $reply = "Город не найден попробуйте снова";
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]); 
-                        }
-                        else
-                        {
-                            removeUserCommand($db, $chat_id);
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => addFavCity($text, $keyboard), 'reply_markup' => $reply_markup ]);
+
                         }
                     }        
                 } 
@@ -121,15 +111,13 @@ use Telegram\Bot\Api;
         }        
     }
 
-    addFavCity("Magadan", $keyboard_city);
     function addFavCity(string $city, array $keyboard_city): ?string 
     {
         $data = getWeatherData($city);
         if ($city == getCity($data))
         {
-            $keyboard_city = [[$city]];
+            $keyboard = [[$city]];
             print_r($keyboard_city);
-            $reply = "Город успешно добавлен";
             return $reply;
         }
         else

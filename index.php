@@ -85,6 +85,11 @@ use Telegram\Bot\Api;
                         }
                         else
                         {
+                            $data = [
+                                "city_unique" => $text,
+                                "user_id" => $chat_id
+                            ];
+                            addCity($db, $data);
                             removeUserCommand($db, $chat_id);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
                         }
@@ -95,20 +100,15 @@ use Telegram\Bot\Api;
                         {
                             $reply = "Город не найден попробуйте снова";
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]); 
-                            $data = [
-                                "city" => $text,
-                                "user_id" => $chat_id
-                            ];
-                            addCity($db, $data);
                         }
                         else
                         {
-                            removeUserCommand($db, $chat_id);
                             $data = [
-                                "city" => $text,
+                                "city_unique" => $text,
                                 "user_id" => $chat_id
                             ];
                             addCity($db, $data);
+                            removeUserCommand($db, $chat_id);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
                         }
                     }        

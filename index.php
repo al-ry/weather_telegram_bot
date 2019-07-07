@@ -47,7 +47,10 @@ use Telegram\Bot\Api;
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            addDataCommand($db, "currentWeather");
+            $data = [
+                "commands" => "currentWeather",
+                "user_id" => $chat_id
+            ];
             addCommand($db, $data);
         }
         elseif ($text == "Прогноз")
@@ -55,12 +58,26 @@ use Telegram\Bot\Api;
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            addDataCommand($db, "forecastWeather");
+            $data = [
+                "commands" => "forecastWeather",
+                "user_id" => $chat_id
+            ];
             addCommand($db, $data);
         }
         elseif ($text == "Избранные города")
         {
             ////////db
+        }
+        elseif ($text == "Добавить город")
+        {
+            removeUserCommand($db, $chat_id);
+            $reply = "Введите город, который желаете добавить"; 
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $data = [
+                "commands" => "addCity",
+                "user_id" => $chat_id
+            ];
+            addCommand($db, $data);
         }
         else
         {
@@ -97,17 +114,44 @@ use Telegram\Bot\Api;
                             removeUserCommand($db, $chat_id);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
                         }
-                    }          
+                    }
+                    elseif  ($userCommand == "addCity") 
+                    {
+                        if (addFavCity($text) == null)
+                        {
+                            $reply = "Город не найден попробуйте снова";
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]); 
+                        }
+                        else
+                        {
+                            removeUserCommand($db, $chat_id);
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => addFavoCity($text), 'reply_markup' => $reply_markup ]);
+                        }
+                    }        
                 } 
             }
         }        
     }
 
-    $table = getUserCommand($db, 560463324);
-    var_dump($table);
-    $userId = $table['commands'];
-    echo $userId;
+
     
+    array_push($keyboard_city);
+    print_r($keyboard_city);
+    
+    function addFavCity(string $city): ?string 
+    {
+        $data = getWeatherData($city);
+        if ($city == getCity($data))
+        {
+            array_push($keyboard_city, $city);
+            print_r($keyboard_city);
+            return "Город успешно добавлен";
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     function getCurrentWeather(string $city): ?string {
         $data = getWeatherData($city); 

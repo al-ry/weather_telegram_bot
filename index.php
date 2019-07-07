@@ -47,7 +47,7 @@ use Telegram\Bot\Api;
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            addDataCommand($db, "currentWeather";
+            addDataCommand($db, "currentWeather");
             addCommand($db, $data);
         }
         elseif ($text == "Прогноз")
@@ -55,7 +55,7 @@ use Telegram\Bot\Api;
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            addDataCommand($db, "forecastWeather";
+            addDataCommand($db, "forecastWeather");
             addCommand($db, $data);
         }
         elseif ($text == "Избранные города")

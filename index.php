@@ -146,8 +146,8 @@ use Telegram\Bot\Api;
         $data = getWeatherData($city);
         if ($city == getCity($data))
         {
- 
-            return "Город успешно добавл           array_push($keyboard_city, $city);ен";
+            array_push($keyboard_city, $city);
+            return "Город успешно добавлен";
         }
         else
         {

@@ -14,7 +14,7 @@ use Telegram\Bot\Api;
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад"]];
-    $keyboard_city = [];
+    $keyboard_city = [['hgjkh']];
     if($text)
     {
         if ($text == "/start")
@@ -140,8 +140,7 @@ use Telegram\Bot\Api;
         }        
     }
 
-    addFavCity("Magadan", $keyboard_city);
-
+    
     function addFavCity(string $city, array $keyboard_city): ?string 
     {
         $data = getWeatherData($city);

@@ -29,7 +29,7 @@ function getUserCommand(MysqliDb $db, string $user): ?array
 }
 
 
-function addDataCommand(MysqliDb $db, string $command, int $chat_id): array
+function addDataCommand(MysqliDb $db, string $command): array
 {
     $data = [
         "commands" => $command,

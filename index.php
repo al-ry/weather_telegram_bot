@@ -14,7 +14,7 @@ use Telegram\Bot\Api;
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад"]];
-    $keyboard_city = [[]];
+    $keyboard_city = [['kjlkjl']];
     if($text)
     {
         if ($text == "/start")

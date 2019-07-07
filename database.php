@@ -43,7 +43,7 @@ function addCity(MysqliDb $db, array $data): void
     $db->insert(DB_NAME . '.city', $data);
 }
 
-function refreshCity(MysqliDb $db, array $user): void
+function refreshCity(MysqliDb $db, string $user): void
 {
     $db->where ("user_id", $user);
     $db->delete(DB_NAME . '.city');

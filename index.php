@@ -15,7 +15,6 @@ use Telegram\Bot\Api;
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад"]];
     $keyboard_city = [[]];
-
     if($text)
     {
         if ($text == "/start")
@@ -141,8 +140,6 @@ use Telegram\Bot\Api;
         }        
     }
 
-    addFavCity("Paris",$keyboard_city);
-    print_r($keyboard);
 
     function addFavCity(string $city, array $keyboard_city): ?string 
     {

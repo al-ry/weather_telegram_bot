@@ -13,7 +13,6 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
-    refreshCity($db, $chat_id);
     if($text)
     {
         if ($text == "/start")
@@ -86,7 +85,6 @@ use Telegram\Bot\Api;
                         }
                         else
                         {
-                            addFavCity($text, $keyboard);
                             removeUserCommand($db, $chat_id);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
                         }

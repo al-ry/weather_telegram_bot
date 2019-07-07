@@ -13,6 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
+    $historyKeyboard = [["Удалить историю"]];
     if($text)
     {
         if ($text == "/start")
@@ -38,7 +39,8 @@ use Telegram\Bot\Api;
         {
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
             $data = [
                 "commands" => "currentWeather",
                 "user_id" => $chat_id
@@ -49,12 +51,20 @@ use Telegram\Bot\Api;
         {
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
             $data = [
                 "commands" => "forecastWeather",
                 "user_id" => $chat_id
             ];
             addCommand($db, $data);
+        }
+        elseif ($text == "Очистить историю")
+        {
+            refreshCity($db, $chat_id);
+            $reply = "История успешно очищена";
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Добавить город")
         {

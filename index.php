@@ -166,12 +166,12 @@ use Telegram\Bot\Api;
             $cloud =  getClouds($data);
             $pressure =  getPressure($data);
             $reply =  "Current weather in " .$city. "(" .$country. "): \n
-           -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
-           -Weather: " .$discr. "
-           -Humidity: " .$humidity. "%
-           -Pressure: " .floor($pressure / 1.333). " mmHg
-           -Cloudiness: " .$cloud. "%";
-           return $reply;
+            -Temperature: " .$temp. " °C , feels like " .$feelsTemp . " °C
+            -Weather: " .$discr. "
+            -Humidity: " .$humidity. "%
+            -Pressure: " .floor($pressure / 1.333). " mmHg
+            -Cloudiness: " .$cloud. "%";
+            return $reply;
         }
         else
         {

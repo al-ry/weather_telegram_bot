@@ -131,7 +131,6 @@ use Telegram\Bot\Api;
                         {
                             removeUserCommand($db, $chat_id);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => addFavoCity($text), 'reply_markup' => $reply_markup ]);
-                            array_push($keyboard_city, $text);
                         }
                     }        
                 } 
@@ -139,15 +138,15 @@ use Telegram\Bot\Api;
         }        
     }
 
-
+    echo addFavCity("Moscow");
 
     function addFavCity(string $city): ?string 
     {
         $data = getWeatherData($city);
         if ($city == getCity($data))
         {
-            array_push($keyboard_city, $city);
-            return "Город успешно добавлен";
+            $reply = "Город успешно добавлен";
+            return $reply;
         }
         else
         {

@@ -29,7 +29,7 @@ function getUserCommand(MysqliDb $db, string $user): ?array
 }
 
 
-function addNameCommand(MysqliDb $db, string $command): array
+function addDataCommand(MysqliDb $db, string $command, int $chat_id): array
 {
     $data = [
         "commands" => $command,
@@ -42,3 +42,4 @@ function addCity(MysqliDb $db, array $data): void
 {
     $db->insert(DB_NAME . '.city', $data);
 }
+

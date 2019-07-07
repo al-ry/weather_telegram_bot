@@ -59,7 +59,7 @@ use Telegram\Bot\Api;
             ];
             addCommand($db, $data);
         }
-        elseif ($text == "Очистить историю")
+        elseif ($text == "Удалить историю")
         {
             refreshCity($db, $chat_id);
             $reply = "История успешно очищена";

@@ -13,6 +13,7 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
+    refreshCity($db, $chat_id);
     if($text)
     {
         if ($text == "/start")

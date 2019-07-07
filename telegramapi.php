@@ -2,7 +2,7 @@
 
 use Telegram\Bot\Api;
 
-function getTelegramApi(): array
+function getTelegramApi(): void
 {
     $telegram = Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU');
     $telegram -> getWebhookUpdates();
@@ -22,3 +22,4 @@ function getUserName(array  $result): string
 {
     return  $result["message"]["from"]["username"];
 }
+

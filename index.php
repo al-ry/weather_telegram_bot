@@ -12,8 +12,7 @@ use Telegram\Bot\Api;
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard= [["Текущая погода"],["Прогноз"]];
-    $keyboard_city = [];
+    $keyboard = [["Текущая погода"],["Прогноз"]];
     if($text)
     {
         if ($text == "/start")
@@ -97,13 +96,21 @@ use Telegram\Bot\Api;
                         {
                             $reply = "Город не найден попробуйте снова";
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]); 
+                            $data = [
+                                "city" => $text,
+                                "user_id" => $chat_id
+                            ];
+                            addCity($db, $data);
                         }
                         else
                         {
                             removeUserCommand($db, $chat_id);
-                            addFavCity($text, $keyboard);
+                            $data = [
+                                "city" => $text,
+                                "user_id" => $chat_id
+                            ];
+                            addCity($db, $data);
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
-
                         }
                     }        
                 } 
@@ -111,19 +118,13 @@ use Telegram\Bot\Api;
         }        
     }
 
-    function addFavCity(string $city, array $keyboard_city): ?string 
+    echo addFavCity('Moscow');
+    print_r($keyboard);
+    function addFavCity(string $city): ?string 
     {
-        $data = getWeatherData($city);
-        if ($city == getCity($data))
-        {
-            $keyboard = [[$city]];
-            print_r($keyboard_city);
-            return $reply;
-        }
-        else
-        {
-            return null;
-        }
+        $keyboard[] = $city;
+        print_r($keyboard);
+        return $keyboard[] = $city;
     }
     function getCurrentWeather(string $city): ?string {
         $data = getWeatherData($city); 

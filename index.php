@@ -140,6 +140,8 @@ use Telegram\Bot\Api;
         }        
     }
 
+    addFavCity("Magadan", $keyboard_city);
+    
 
     function addFavCity(string $city, array $keyboard_city): ?string 
     {

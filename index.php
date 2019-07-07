@@ -125,7 +125,7 @@ use Telegram\Bot\Api;
                     }
                     elseif  ($userCommand == "addCity") 
                     {
-                        if (addFavCity($text) == null)
+                        if (addFavCity($text, $keyboard_city) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
                             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]); 
@@ -133,7 +133,7 @@ use Telegram\Bot\Api;
                         else
                         {
                             removeUserCommand($db, $chat_id);
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => addFavCity($text), 'reply_markup' => $reply_markup ]);
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => addFavCity($text, $keyboard_city), 'reply_markup' => $reply_markup ]);
                         }
                     }        
                 } 

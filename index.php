@@ -130,7 +130,7 @@ use Telegram\Bot\Api;
                         else
                         {
                             removeUserCommand($db, $chat_id);
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => addFavoCity($text), 'reply_markup' => $reply_markup ]);
+                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => addFavCity($text), 'reply_markup' => $reply_markup ]);
                         }
                     }        
                 } 
@@ -145,6 +145,7 @@ use Telegram\Bot\Api;
         $data = getWeatherData($city);
         if ($city == getCity($data))
         {
+            array_push($keyboard_city, $city);
             $reply = "Город успешно добавлен";
             return $reply;
         }

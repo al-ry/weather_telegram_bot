@@ -12,8 +12,7 @@ use Telegram\Bot\Api;
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
-    $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад"]];
+    $keyboard= [["Текущая погода"],["Прогноз"]];
     $keyboard_city = [];
     if($text)
     {
@@ -36,12 +35,6 @@ use Telegram\Bot\Api;
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
         }
-        elseif ($text == "Узнать погоду")
-        {
-            $reply = "Выберите опцию из меню";
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_forecast, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-        }
         elseif ($text == "Текущая погода")
         {
             removeUserCommand($db, $chat_id);
@@ -63,18 +56,6 @@ use Telegram\Bot\Api;
                 "user_id" => $chat_id
             ];
             addCommand($db, $data);
-        }
-        elseif ($text == "Назад")
-        {
-            $reply = 'Главное меню';
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-        }
-        elseif ($text == "Избранные города")
-        {
-            $reply = 'Избранные города';
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_city, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Добавить город")
         {

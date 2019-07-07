@@ -13,8 +13,8 @@ use Telegram\Bot\Api;
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
-    $keyboard_forecast = [["Текущая погода"],["Прогноз"]];
-    $keyboard_city = [];
+    $keyboard_forecast = [["Текущая погода"],["Прогноз"]["Назад"]];
+    $keyboard_city = [["Paris"]];
     if($text)
     {
         if ($text == "/start")
@@ -64,6 +64,11 @@ use Telegram\Bot\Api;
             ];
             addCommand($db, $data);
         }
+        elseif ($text == "Назад")
+        {
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+        }
         elseif ($text == "Избранные города")
         {
             ////////db
@@ -84,7 +89,6 @@ use Telegram\Bot\Api;
             if (strlen($text) != 0)
             {
                 $getUser = getUserCommand($db, $chat_id);
-                $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
                 if ($getUser) 
                 {
                     $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
@@ -133,11 +137,7 @@ use Telegram\Bot\Api;
         }        
     }
 
-
-    
-    array_push($keyboard_city);
-    print_r($keyboard_city);
-    
+  
     function addFavCity(string $city): ?string 
     {
         $data = getWeatherData($city);
@@ -152,7 +152,6 @@ use Telegram\Bot\Api;
             return null;
         }
     }
-
     function getCurrentWeather(string $city): ?string {
         $data = getWeatherData($city); 
         if ($city == getCity($data))

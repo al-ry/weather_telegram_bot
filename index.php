@@ -14,8 +14,8 @@ use Telegram\Bot\Api;
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Узнать погоду"],["Избранные города"],["Добавить город"]]; //Клавиатура
     $keyboard_forecast = [["Текущая погода"],["Прогноз"],["Назад"]];
-    $keyboard_city = array();
-    $keyboard_cities = [];
+    $keyboard_city = [[]];
+
     if($text)
     {
         if ($text == "/start")
@@ -74,7 +74,7 @@ use Telegram\Bot\Api;
         elseif ($text == "Избранные города")
         {
             $reply = 'Избранные города';
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_cities, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard_city, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
         }
         elseif ($text == "Добавить город")
@@ -141,8 +141,7 @@ use Telegram\Bot\Api;
         }        
     }
 
-    addFavCity("Moscow",$keyboard_city);
-    $keyboard_city = array();
+    addFavCity("Paris",$keyboard_city);
     print_r($keyboard);
 
     function addFavCity(string $city, array $keyboard_city): ?string 

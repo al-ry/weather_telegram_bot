@@ -77,7 +77,7 @@
                     }
                     else
                     {
-                        $cityData = addDataCity($db, $text, $chat_id);
+                        $cityData = addDataCity($db, $text, $chatId);
                         addCity($db, $cityData);
                         removeUserCommand($db, $chatId);
                         replyMessage($chatId, getCurrentWeather($text), $replyMarkup, $telegram);   
@@ -92,7 +92,7 @@
                     }
                     else
                     {
-                        $cityData = addDataCity($db, $text, $chat_id);
+                        $cityData = addDataCity($db, $text, $chatId);
                         addCity($db, $cityData);
                         replyMessage($chatId, getForecastWeather($text), $replyMarkup, $telegram); 
                     }

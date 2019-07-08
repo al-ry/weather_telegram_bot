@@ -14,6 +14,7 @@
     $name = getUserName($result); //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
     $historyKeyboard = [["Удалить историю"]];
+
     if($text) 
     {
         if ($text == "/start") 

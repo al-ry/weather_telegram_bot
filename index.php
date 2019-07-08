@@ -40,8 +40,7 @@
             removeUserCommand($db, $chatId);
             refreshCity($db, $chatId);
             $reply = "Введите город"; 
-            $replyMarkup= getReplyMarkup($historyKeyboard, $telegram);
-            replyMessage($chatId, $reply, $replyMarkup, $telegram);
+            replyMessage($chatId, $reply, null, $telegram);
             $comandData =  addDataCommand($db, "currentWeather", $chatId);
             addCommand($db, $comandData);
         }
@@ -50,17 +49,9 @@
             removeUserCommand($db, $chatId);
             refreshCity($db, $chatId);
             $reply = "Введите город"; 
-            $replyMarkup= getReplyMarkup($historyKeyboard, $telegram);
-            replyMessage($chatId, $reply, $replyMarkup, $telegram);
+            replyMessage($chatId, $reply, null, $telegram);
             $comandData = addDataCommand($db, "forecastWeather", $chatId);
             addCommand($db, $comandData);
-        }
-        elseif ($text == "Удалить историю")
-        {
-            refreshCity($db, $chatId);
-            $reply = "История успешно очищена";
-            $replyMarkup= getReplyMarkup($keyboard, $telegram);
-            replyMessage($chatId, $reply, $replyMarkup, $telegram);         
         }
         else
         {

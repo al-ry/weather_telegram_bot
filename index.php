@@ -3,7 +3,11 @@
     require_once('telegramapi.php');
     require_once('weatherapi.php');
     require_once('database.php');
+    require_once('config.php');
+
     use Telegram\Bot\Api;
+
+
 
     $db = initDB();
     $telegram = new Api(apiToken); //Устанавливаем токен, полученный у BotFather
@@ -11,7 +15,7 @@
     $text = getText($result); //Текст сообщения
     $chatId = getUserId($result); //Уникальный идентификатор пользователя
     $name = getUserName($result); //Юзернейм пользователя
-    $keyboard = [["Текущая погода"],["Прогноз"]];
+    $keyboard = [["Current weather"],["Forecast Weather"]];
 
     if($text) 
     {
@@ -30,24 +34,24 @@
         }
         elseif ($text == "/help")
         {
-            $reply = "С помощью этого бота вы можете узнать погоду по всему миру";
+            $reply = "The bot can show the weather all over the world.";
             $replyMarkup= getReplyMarkup($keyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);
         }
-        elseif ($text == "Текущая погода")
+        elseif ($text == "Current weather")
         {
             removeUserCommand($db, $chatId);
             refreshCity($db, $chatId);
-            $reply = "Введите город"; 
+            $reply = "Send me a city"; 
             replyMessage($chatId, $reply, null, $telegram);
             $comandData =  addDataCommand($db, "currentWeather", $chatId);
             addCommand($db, $comandData);
         }
-        elseif ($text == "Прогноз")
+        elseif ($text == "Forecast Weather")
         {
             removeUserCommand($db, $chatId);
             refreshCity($db, $chatId);
-            $reply = "Введите город"; 
+            $reply = "Send me a city"; 
             replyMessage($chatId, $reply, null, $telegram);
             $comandData = addDataCommand($db, "forecastWeather", $chatId);
             addCommand($db, $comandData);
@@ -63,7 +67,7 @@
                 {
                     if (getCurrentWeather($text) == null)
                     {
-                        $reply = "Город не найден попробуйте снова";
+                        $reply = "City is not found";
                         replyMessage($chatId, $reply, null, $telegram);
                     }
                     else
@@ -78,7 +82,7 @@
                 {
                     if (getForecastWeather($text) == null)
                     {
-                        $reply = "Город не найден попробуйте снова";
+                        $reply = "City is not found";
                         replyMessage($chatId, $reply, null, $telegram);
                     }
                     else

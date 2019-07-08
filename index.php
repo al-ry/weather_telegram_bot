@@ -85,6 +85,7 @@
                             "second_city" => 'empty',
                             "third_city" => $text
                         ];
+                        addDataCity($db, $text, $chat_id);
                         addCity($db, $data);
                         removeUserCommand($db, $chatId);
                         replyMessage($chatId, getCurrentWeather($text), $replyMarkup, $telegram);   
@@ -107,6 +108,7 @@
                             "second_city" => 'empty',
                             "third_city" => $text
                         ];
+                        addDataCity($db, $text, $chat_id);
                         addCity($db, $data);
                         removeUserCommand($db, $chatId);
                         replyMessage($chatId, getForecastWeather($text), $replyMarkup, $telegram); 

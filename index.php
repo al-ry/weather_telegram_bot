@@ -5,9 +5,6 @@
     require_once('database.php');
     use Telegram\Bot\Api;
 
-    const COMMAND_START = "/start";
-    const COMMAND_HELP = "/help";
-
     $db = initDB();
     $telegram = new Api(apiToken); //Устанавливаем токен, полученный у BotFather
     $result = getTelegramApi($telegram); //Передаем в переменную $result полную информацию о сообщении пользовател
@@ -18,7 +15,7 @@
 
     if($text) 
     {
-        if ($text == COMMAND_START) 
+        if ($text == "/start") 
         {
             if (strlen($name) != 0)
             {
@@ -91,8 +88,7 @@
                         replyMessage($chatId, getForecastWeather($text), $replyMarkup, $telegram); 
                     }
                 }        
-            } 
-            
+            }           
         }        
     }
 

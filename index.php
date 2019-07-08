@@ -79,9 +79,9 @@
                     {
                         $data = [
                             "user_id" => $chatId,
-                            "first_city" => $city["second_city"],
-                            "second_city" => $city["third_city"],
-                            "third_city" => $city
+                            "first_city" => $text["second_city"],
+                            "second_city" => $text["third_city"],
+                            "third_city" => $text
                         ];
                         addCity($db, $data);
                         removeUserCommand($db, $chatId);
@@ -99,9 +99,9 @@
                     {
                         $data = [
                             "user_id" => $chatId,
-                            "first_city" => $city["second_city"],
-                            "second_city" => $city["third_city"],
-                            "third_city" => $city
+                            "first_city" => $text["second_city"],
+                            "second_city" => $text["third_city"],
+                            "third_city" => $text
                         ];
                         addCity($db, $data);
                         removeUserCommand($db, $chatId);

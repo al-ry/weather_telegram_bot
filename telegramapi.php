@@ -24,9 +24,9 @@ function getUserName(array  $result): string
     return  $result["message"]["from"]["username"];
 }
 
-function replyMessage(int $chatId,string $reply, string $replyMarkup, object $telegram): object
+function replyMessage(int $chatId,string $reply, string $replyMarkup, object $telegram): void
 {
-    return $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
+    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
 }
 
 function getReplyMarkup($keyboard, $telegram): void 

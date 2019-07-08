@@ -1,6 +1,9 @@
 <?php
+
+
 require_once("database.php");
 include('vendor/autoload.php');
+$db = initDB();
 $telegram = new Api(apiToken);
 use Telegram\Bot\Api;
 

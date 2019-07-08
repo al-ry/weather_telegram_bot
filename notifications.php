@@ -1,4 +1,9 @@
 <?php
+require_once("database.php");
+include('vendor/autoload.php');
+$telegram = new Api(apiToken);
+use Telegram\Bot\Api;
+
 
 $cityArray = getLastCity($db, $chatId);
 $cityName = $cityArray['city_unique'];

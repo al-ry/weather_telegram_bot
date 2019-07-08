@@ -41,8 +41,8 @@ use Telegram\Bot\Api;
             $reply = "Введите город"; 
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-            addDataCommand($db, "currentWeather", $chat_id);
-            addCommand($db, $data);
+            $comandData =  addDataCommand($db, "currentWeather", $chat_id);
+            addCommand($db, $comandData);
         }
         elseif ($text == "Прогноз")
         {

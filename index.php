@@ -26,21 +26,21 @@
             {
                 $reply = "Привет, незнакомец";
             }
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $reply_markup = getReplyMarkup($keyboard,$telegram);
             replyMessage($chat_id, $reply, $reply_markup, $telegram);
         }
         elseif ($text == "/help")
         {
             $reply = "С помощью этого бота вы можете узнать погоду по всему миру";
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+            $reply_markup = getReplyMarkup($keyboard,$telegram);
+            replyMessage($chat_id, $reply, $reply_markup, $telegram);
         }
         elseif ($text == "Текущая погода")
         {
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            $reply_markup = getReplyMarkup($historyKeyboard,$telegram);
+            replyMessage($chat_id, $reply, $reply_markup, $telegram);
             $comandData =  addDataCommand($db, "currentWeather", $chat_id);
             addCommand($db, $comandData);
         }
@@ -48,8 +48,8 @@
         {
             removeUserCommand($db, $chat_id);
             $reply = "Введите город"; 
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            $reply_markup = getReplyMarkup($historyKeyboard,$telegram);
+            replyMessage($chat_id, $reply, $reply_markup, $telegram);
             $comandData = addDataCommand($db, "forecastWeather", $chat_id);
             addCommand($db, $comandData);
         }
@@ -57,8 +57,8 @@
         {
             refreshCity($db, $chat_id);
             $reply = "История успешно очищена";
-            $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            $reply_markup = getReplyMarkup($keyboard,$telegram);
+            replyMessage($chat_id, $reply, $reply_markup, $telegram);         
         }
         else
         {
@@ -67,7 +67,7 @@
                 $getUser = getUserCommand($db, $chat_id);
                 if ($getUser) 
                 {
-                    $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
+                    $reply_markup = getReplyMarkup($keyboard,$telegram);
                     $userCommand = $getUser['commands'];
                     if ($userCommand == "currentWeather")
                     {
@@ -84,7 +84,7 @@
                             ];
                             addCity($db, $data);
                             removeUserCommand($db, $chat_id);
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getCurrentWeather($text), 'reply_markup' => $reply_markup ]);
+                            replyMessage($chat_id, getCurrentWeather($text), $reply_markup, $telegram);   
                         }
                     }
                     elseif ($userCommand == "forecastWeather")
@@ -102,7 +102,7 @@
                             ];
                             addCity($db, $data);
                             removeUserCommand($db, $chat_id);
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => getForecastWeather($text), 'reply_markup' => $reply_markup ]);
+                            replyMessage($chat_id, getForecastWeather($text), $reply_markup, $telegram); 
                         }
                     }        
                 } 

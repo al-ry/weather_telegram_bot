@@ -23,11 +23,11 @@
         {
             if (strlen($name) != 0)
             {
-                $reply = "Привет, ".$name."!";
+                $reply = "Hello, ".$name."!";
             }
             else
             {
-                $reply = "Привет, незнакомец";
+                $reply = "Hello, stranger";
             }
             $replyMarkup = getReplyMarkup($keyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);

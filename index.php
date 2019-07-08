@@ -13,7 +13,6 @@
     $chatId = getUserId($result); //Уникальный идентификатор пользователя
     $name = getUserName($result); //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
-    $historyKeyboard = [["Удалить историю"]];
 
     if($text) 
     {
@@ -39,6 +38,7 @@
         elseif ($text == "Текущая погода")
         {
             removeUserCommand($db, $chatId);
+            refreshCity($db, $chatId);
             $reply = "Введите город"; 
             $replyMarkup= getReplyMarkup($historyKeyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);
@@ -48,6 +48,7 @@
         elseif ($text == "Прогноз")
         {
             removeUserCommand($db, $chatId);
+            refreshCity($db, $chatId);
             $reply = "Введите город"; 
             $replyMarkup= getReplyMarkup($historyKeyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);

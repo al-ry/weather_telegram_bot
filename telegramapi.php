@@ -8,7 +8,7 @@ function getTelegramApi($telegram)
     return $telegram -> getWebhookUpdates();
 }
 
-function getText(object $result): string
+function getText($result): string
 {
     return $result["message"]["text"];
 }

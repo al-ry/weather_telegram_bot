@@ -9,9 +9,9 @@
     $db = initDB();
     $telegram = new Api(apiToken); //Устанавливаем токен, полученный у BotFather
     $result =  getTelegramApi($telegram); //Передаем в переменную $result полную информацию о сообщении пользовател
-    $text = $result["message"]["text"]; //Текст сообщения
-    $chatId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
-    $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
+    $text = getText($result); //Текст сообщения
+    $chatId = getUserId($result); //Уникальный идентификатор пользователя
+    $name = getUserName($result); //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
     $historyKeyboard = [["Удалить историю"]];
     if($text) 

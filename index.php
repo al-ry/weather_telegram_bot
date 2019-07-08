@@ -121,7 +121,6 @@
 
     function getForecastWeather(string $city): ?string 
     {
-        $cityArray = getLastCity($db, $chatId);
         $data = getWeatherData($city);
         if ($city == getCity($data)) {
             $country = getCountry($data);
@@ -135,11 +134,7 @@
                 -Average temperature: " . $avgTemp. " °C 
                 -Weather: " .$discr. "
                 -Humidity: " .$avgHumidity. "% \n \n";
-                $reply .= $message;  
-                if  ($cityArray) 
-                {
-                    break;
-                }     
+                $reply .= $message;     
             }
             return $location .= $reply;
         } else {

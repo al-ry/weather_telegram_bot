@@ -31,7 +31,7 @@ function replyMessage($chatId, $reply, $replyMarkup, $telegram): void
 
 function getReplyMarkup($keyboard, $telegram): void 
 {
-    $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
 }
 
 

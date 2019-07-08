@@ -28,20 +28,20 @@ function getUserCommand(MysqliDb $db, string $user): ?array
     return $db->getOne (DB_NAME . ".bot_commands"); 
 }
 
-function addDataCommand(MysqliDb $db, string $command, $chat_id): array
+function addDataCommand(MysqliDb $db, string $command, $chatId): array
 {
     $data = [
         "commands" => $command,
-        "user_id" => $chat_id
+        "user_id" => $chatId
     ];
     return $data; 
 }
 
-function addDataCity(MysqliDb $db, string $city, $chat_id): array
+function addDataCity(MysqliDb $db, string $city, $chatId): array
 {
     $data = [
         "city_unique" => $city,
-        "user_id" => $chat_id
+        "user_id" => $chatId
     ];
     return $data; 
 }

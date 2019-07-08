@@ -10,7 +10,7 @@
     $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
     $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользовател
     $text = $result["message"]["text"]; //Текст сообщения
-    $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
+    $chataId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
     $historyKeyboard = [["Удалить историю"]];
@@ -26,65 +26,65 @@
             {
                 $reply = "Привет, незнакомец";
             }
-            $reply_markup = getReplyMarkup($keyboard,$telegram);
-            replyMessage($chat_id, $reply, $reply_markup, $telegram);
+            $replyMarkup= getReplyMarkup($keyboard, $telegram);
+            replyMessage($chataId, $reply, $replyMarkup, $telegram);
         }
         elseif ($text == "/help")
         {
             $reply = "С помощью этого бота вы можете узнать погоду по всему миру";
-            $reply_markup = getReplyMarkup($keyboard,$telegram);
-            replyMessage($chat_id, $reply, $reply_markup, $telegram);
+            $replyMarkup= getReplyMarkup($keyboard,$telegram);
+            replyMessage($chatId, $reply, $replyMarkup, $telegram);
         }
         elseif ($text == "Текущая погода")
         {
-            removeUserCommand($db, $chat_id);
+            removeUserCommand($db, $chatId);
             $reply = "Введите город"; 
-            $reply_markup = getReplyMarkup($historyKeyboard,$telegram);
-            replyMessage($chat_id, $reply, $reply_markup, $telegram);
-            $comandData =  addDataCommand($db, "currentWeather", $chat_id);
+            $replyMarkup= getReplyMarkup($historyKeyboard,$telegram);
+            replyMessage($chatId, $reply, $replyMarkup, $telegram);
+            $comandData =  addDataCommand($db, "currentWeather", $chatId);
             addCommand($db, $comandData);
         }
         elseif ($text == "Прогноз")
         {
-            removeUserCommand($db, $chat_id);
+            removeUserCommand($db, $chatId);
             $reply = "Введите город"; 
-            $reply_markup = getReplyMarkup($historyKeyboard,$telegram);
-            replyMessage($chat_id, $reply, $reply_markup, $telegram);
-            $comandData = addDataCommand($db, "forecastWeather", $chat_id);
+            $replyMarkup= getReplyMarkup($historyKeyboard,$telegram);
+            replyMessage($chatId, $reply, $replyMarkup, $telegram);
+            $comandData = addDataCommand($db, "forecastWeather", $chatId);
             addCommand($db, $comandData);
         }
         elseif ($text == "Удалить историю")
         {
-            refreshCity($db, $chat_id);
+            refreshCity($db, $chatId);
             $reply = "История успешно очищена";
-            $reply_markup = getReplyMarkup($keyboard,$telegram);
-            replyMessage($chat_id, $reply, $reply_markup, $telegram);         
+            $replyMarkup= getReplyMarkup($keyboard,$telegram);
+            replyMessage($chatId, $reply, $replyMarkup, $telegram);         
         }
         else
         {
             if (strlen($text) != 0)
             {
-                $getUser = getUserCommand($db, $chat_id);
+                $getUser = getUserCommand($db, $chatId);
                 if ($getUser) 
                 {
-                    $reply_markup = getReplyMarkup($keyboard,$telegram);
+                    $replyMarkup = getReplyMarkup($keyboard,$telegram);
                     $userCommand = $getUser['commands'];
                     if ($userCommand == "currentWeather")
                     {
                         if (getCurrentWeather($text) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
-                            replyMessage($chat_id, $reply, null, $telegram);
+                            replyMessage($chatId, $reply, null, $telegram);
                         }
                         else
                         {
                             $data = [
                                 "city_unique" => $text,
-                                "user_id" => $chat_id
+                                "user_id" => $chatId
                             ];
                             addCity($db, $data);
-                            removeUserCommand($db, $chat_id);
-                            replyMessage($chat_id, getCurrentWeather($text), $reply_markup, $telegram);   
+                            removeUserCommand($db, $chatId);
+                            replyMessage($chatId, getCurrentWeather($text), $replyMarkup, $telegram);   
                         }
                     }
                     elseif ($userCommand == "forecastWeather")
@@ -92,17 +92,17 @@
                         if (getForecastWeather($text) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
-                            replyMessage($chat_id, $reply, null, $telegram);
+                            replyMessage($chatId, $reply, null, $telegram);
                         }
                         else
                         {
                             $data = [
                                 "city_unique" => $text,
-                                "user_id" => $chat_id
+                                "user_id" => $chatId
                             ];
                             addCity($db, $data);
-                            removeUserCommand($db, $chat_id);
-                            replyMessage($chat_id, getForecastWeather($text), $reply_markup, $telegram); 
+                            removeUserCommand($db, $chatId);
+                            replyMessage($chatId, getForecastWeather($text), $replyMarkup, $telegram); 
                         }
                     }        
                 } 

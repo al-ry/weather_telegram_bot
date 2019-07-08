@@ -3,7 +3,6 @@
     require_once('telegramapi.php');
     require_once('weatherapi.php');
     require_once('database.php');
-    require_once('notifications.php');
     use Telegram\Bot\Api;
 
     $db = initDB();
@@ -101,7 +100,7 @@
     addFavCity($keyboard, $db);
     print_r($keyboard);
     print_r($test);
-    
+
     function getCurrentWeather(string $city): ?string 
     {
         $data = getWeatherData($city); 
@@ -147,3 +146,5 @@
             return null;
         } 
     }
+    
+    require_once('notifications.php');

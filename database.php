@@ -43,9 +43,7 @@ function addDataCity(MysqliDb $db, string $city, int $chatId): array
     $test = $db->getOne (DB_NAME . ".city");
     $data = [
         "user_id" => $chatId,
-        "first_city" =>  $test["second_city"],
-        "second_city" =>  $test["third_city"],
-        "third_city" => $city
+        "city_unique" => $city
     ];
     return $data; 
 }

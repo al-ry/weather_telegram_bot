@@ -77,16 +77,8 @@
                     }
                     else
                     {
-                        $db->where ("user_id", $chat_id);
-                        $test = $db->getOne (DB_NAME . ".city");
-                        $data = [
-                            "user_id" => $chatId,
-                            "first_city" =>  'empty',
-                            "second_city" => 'empty',
-                            "third_city" => $text
-                        ];
-                        addDataCity($db, $text, $chat_id);
-                        addCity($db, $data);
+                        $cityData = addDataCity($db, $text, $chat_id);
+                        addCity($db, $cityData);
                         removeUserCommand($db, $chatId);
                         replyMessage($chatId, getCurrentWeather($text), $replyMarkup, $telegram);   
                     }
@@ -100,17 +92,8 @@
                     }
                     else
                     {
-                        $db->where ("user_id", $chat_id);
-                        $test = $db->getOne (DB_NAME . ".city");
-                        $data = [
-                            "user_id" => $chatId,
-                            "first_city" =>  'empty',
-                            "second_city" => 'empty',
-                            "third_city" => $text
-                        ];
-                        addDataCity($db, $text, $chat_id);
-                        addCity($db, $data);
-                        removeUserCommand($db, $chatId);
+                        $cityData = addDataCity($db, $text, $chat_id);
+                        addCity($db, $cityData);
                         replyMessage($chatId, getForecastWeather($text), $replyMarkup, $telegram); 
                     }
                 }        

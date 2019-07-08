@@ -8,17 +8,17 @@ function getTelegramApi(Api $telegram): object
     return $telegram -> getWebhookUpdates();
 }
 
-function getText(object $result): string
+function getText(object $result): ?string
 {
     return $result["message"]["text"];
 }
 
-function getUserId(object $result): int
+function getUserId(object $result): ?int
 {
     return $result["message"]["chat"]["id"];
 }
 
-function getUserName(object $result): string
+function getUserName(object $result): ?string
 {
     return $result["message"]["from"]["username"];
 }

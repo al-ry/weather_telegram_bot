@@ -8,7 +8,7 @@
 
     $db = initDB();
     $telegram = new Api(apiToken); //Устанавливаем токен, полученный у BotFather
-    $result =  getTelegramApi($telegram); //Передаем в переменную $result полную информацию о сообщении пользовател
+    $result = getTelegramApi($telegram); //Передаем в переменную $result полную информацию о сообщении пользовател
     $text = getText($result); //Текст сообщения
     $chatId = getUserId($result); //Уникальный идентификатор пользователя
     $name = getUserName($result); //Юзернейм пользователя
@@ -63,59 +63,60 @@
         }
         else
         {
-
-                $getUser = getUserCommand($db, $chatId);
-                if ($getUser) 
+            $getUser = getUserCommand($db, $chatId);
+            if ($getUser) 
+            {
+                $replyMarkup = getReplyMarkup($keyboard, $telegram);
+                $userCommand = $getUser['commands'];
+                if ($userCommand == "currentWeather")
                 {
-                    $replyMarkup = getReplyMarkup($keyboard, $telegram);
-                    $userCommand = $getUser['commands'];
-                    if ($userCommand == "currentWeather")
+                    if (getCurrentWeather($text) == null)
                     {
-                        if (getCurrentWeather($text) == null)
-                        {
-                            $reply = "Город не найден попробуйте снова";
-                            replyMessage($chatId, $reply, null, $telegram);
-                        }
-                        else
-                        {
-                            $data = [
-                                "city_unique" => $text,
-                                "user_id" => $chatId
-                            ];
-                            addCity($db, $data);
-                            removeUserCommand($db, $chatId);
-                            replyMessage($chatId, getCurrentWeather($text), $replyMarkup, $telegram);   
-                        }
+                        $reply = "Город не найден попробуйте снова";
+                        replyMessage($chatId, $reply, null, $telegram);
                     }
-                    elseif ($userCommand == "forecastWeather")
+                    else
                     {
-                        if (getForecastWeather($text) == null)
-                        {
-                            $reply = "Город не найден попробуйте снова";
-                            replyMessage($chatId, $reply, null, $telegram);
-                        }
-                        else
-                        {
-                            $data = [
-                                "city_unique" => $text,
-                                "user_id" => $chatId
-                            ];
-                            addCity($db, $data);
-                            removeUserCommand($db, $chatId);
-                            replyMessage($chatId, getForecastWeather($text), $replyMarkup, $telegram); 
-                        }
-                    }        
-                } 
+                        $data = [
+                            "city_unique" => $text,
+                            "user_id" => $chatId
+                        ];
+                        addCity($db, $data);
+                        removeUserCommand($db, $chatId);
+                        replyMessage($chatId, getCurrentWeather($text), $replyMarkup, $telegram);   
+                    }
+                }
+                elseif ($userCommand == "forecastWeather")
+                {
+                    if (getForecastWeather($text) == null)
+                    {
+                        $reply = "Город не найден попробуйте снова";
+                        replyMessage($chatId, $reply, null, $telegram);
+                    }
+                    else
+                    {
+                        $data = [
+                            "user_id" => $chatId,
+                            "first_city" => $city["second_city"],
+                            "second_city" => $city["third_city"],
+                            "third_city" => $city
+                        ];
+                        addCity($db, $data);
+                        removeUserCommand($db, $chatId);
+                        replyMessage($chatId, getForecastWeather($text), $replyMarkup, $telegram); 
+                    }
+                }        
+            } 
             
         }        
     }
 
     $keyboard = [];
     $db->where ("user_id", 592095051);
-    $test =  $db->getOne (DB_NAME . ".city");
+    $test = $db->getOne (DB_NAME . ".city");
     $keyboard[] = $test['city_unique'];
     addFavCity($keyboard, $db);
-
+    print_r($keyboard);
     print_r($test);
 
     function addFavCity(array $keyboard, $db): array 

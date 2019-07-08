@@ -37,11 +37,13 @@ function addDataCommand(MysqliDb $db, string $command, $chatId): array
     return $data; 
 }
 
-function addDataCity(MysqliDb $db, string $city, $chatId): array
+function addDataCity(MysqliDb $db, string $city, int $chatId): array
 {
     $data = [
-        "city_unique" => $city,
-        "user_id" => $chatId
+        "user_id" => $chatId,
+        "first_city" => $city["second_city"],
+        "second_city" => $city["third_city"],
+        "third_city" => $city
     ];
     return $data; 
 }

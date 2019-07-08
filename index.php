@@ -7,7 +7,8 @@
     use Telegram\Bot\Api;
 
     $db = initDB();
-    $result = getTelegramApi(); //Передаем в переменную $result полную информацию о сообщении пользовател
+    $telegram = new Api(apiToken); //Устанавливаем токен, полученный у BotFather
+    $result =  getTelegramApi(); //Передаем в переменную $result полную информацию о сообщении пользовател
     $text = $result["message"]["text"]; //Текст сообщения
     $chatId = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя

@@ -5,7 +5,6 @@ const apiToken = '840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU';
 
 function getTelegramApi()
 {
-    $telegram = Api(apiToken);
     return $telegram -> getWebhookUpdates();
 }
 

@@ -1,6 +1,6 @@
 <?php
 require_once('database.php');
-$cityArray = getLastCity($db, $chatId);
+$cityArray = getUserCommand($db, $chatId);
 $cityName = $cityArray['city_unique'];
 if ($cityArray)
 {

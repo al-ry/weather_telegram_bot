@@ -41,10 +41,7 @@ use Telegram\Bot\Api;
             $reply = "Введите город"; 
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-            $data = [
-                "commands" => "currentWeather",
-                "user_id" => $chat_id
-            ];
+            addDataCommand($db, "currentWeather", $chat_id);
             addCommand($db, $data);
         }
         elseif ($text == "Прогноз")
@@ -53,10 +50,7 @@ use Telegram\Bot\Api;
             $reply = "Введите город"; 
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-            $data = [
-                "commands" => "forecastWeather",
-                "user_id" => $chat_id
-            ];
+            addDataCommand($db, "forecastWeather", $chat_id);
             addCommand($db, $data);
         }
         elseif ($text == "Удалить историю")
@@ -127,13 +121,20 @@ use Telegram\Bot\Api;
         }        
     }
 
-    echo addFavCity('Moscow');
-    print_r($keyboard);
-    function addFavCity(string $city): ?string 
+    $keyboard = [];
+    $db->where ("user_id", 592095051);
+    $test =  $db->getOne (DB_NAME . ".city");
+    $keyboard[] = $test['city_unique'];
+    addFavCity($keyboard, $db);
+
+    print_r($test);
+
+    function addFavCity(array $keyboard, $db): array
     {
-        $keyboard[] = $city;
-        print_r($keyboard);
-        return $keyboard[] = $city;
+        $db->where ("user_id", 592095051);
+        $test =  $db->getOne (DB_NAME . ".city");
+        $keyboard[] = $test['city_unique'];
+        return $keyboard;
     }
     function getCurrentWeather(string $city): ?string {
         $data = getWeatherData($city); 

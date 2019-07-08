@@ -26,12 +26,12 @@ function getUserName(array  $result): string
 
 function replyMessage($chatId, $reply, $replyMarkup, $telegram): void
 {
-    $telegram->sendMessage(['chatId' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
+    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
 }
 
 function getReplyMarkup($keyboard, $telegram): void 
 {
-    $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
+    $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => false ]);
 }
 
 

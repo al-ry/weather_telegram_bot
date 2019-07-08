@@ -138,5 +138,3 @@
             return null;
         } 
     }
-
-    require_once('notifications.php');

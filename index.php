@@ -63,8 +63,7 @@
         }
         else
         {
-            if (strlen($text) != 0)
-            {
+
                 $getUser = getUserCommand($db, $chatId);
                 if ($getUser) 
                 {
@@ -107,7 +106,7 @@
                         }
                     }        
                 } 
-            }
+            
         }        
     }
 

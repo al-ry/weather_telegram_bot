@@ -93,14 +93,6 @@
         }        
     }
 
-    $keyboard = [];
-    $db->where ("user_id", 592095051);
-    $test = $db->getOne (DB_NAME . ".city");
-    $keyboard[] = $test['city_unique'];
-    addFavCity($keyboard, $db);
-    print_r($keyboard);
-    print_r($test);
-
     function getCurrentWeather(string $city): ?string 
     {
         $data = getWeatherData($city); 
@@ -146,5 +138,5 @@
             return null;
         } 
     }
-    
+
     require_once('notifications.php');

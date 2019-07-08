@@ -74,7 +74,7 @@
                         if (getCurrentWeather($text) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]);
+                            replyMessage($chat_id, $reply, null, $telegram);
                         }
                         else
                         {
@@ -92,7 +92,7 @@
                         if (getForecastWeather($text) == null)
                         {
                             $reply = "Город не найден попробуйте снова";
-                            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply]); 
+                            replyMessage($chat_id, $reply, null, $telegram);
                         }
                         else
                         {

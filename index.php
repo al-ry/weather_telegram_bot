@@ -27,7 +27,7 @@
                 $reply = "Привет, незнакомец";
             }
             $replyMarkup = getReplyMarkup($keyboard, $telegram);
-            replyMessage($chataId, $reply, $replyMarkup, $telegram);
+            replyMessage($chatId, $reply, $replyMarkup, $telegram);
         }
         elseif ($text == "/help")
         {

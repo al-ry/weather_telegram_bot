@@ -23,7 +23,7 @@ function getUserName(object $result): ?string
     return $result["message"]["from"]["username"];
 }
 
-function replyMessage(int $chatId, string $reply, string $replyMarkup, Api $telegram): object
+function replyMessage(int $chatId, string $reply, ?string $replyMarkup, Api $telegram): object
 {
     return $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
 }

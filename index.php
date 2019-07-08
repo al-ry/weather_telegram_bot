@@ -26,20 +26,20 @@
             {
                 $reply = "Привет, незнакомец";
             }
-            $replyMarkup= getReplyMarkup($keyboard, $telegram);
+            $replyMarkup = getReplyMarkup($keyboard, $telegram);
             replyMessage($chataId, $reply, $replyMarkup, $telegram);
         }
         elseif ($text == "/help")
         {
             $reply = "С помощью этого бота вы можете узнать погоду по всему миру";
-            $replyMarkup= getReplyMarkup($keyboard,$telegram);
+            $replyMarkup= getReplyMarkup($keyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);
         }
         elseif ($text == "Текущая погода")
         {
             removeUserCommand($db, $chatId);
             $reply = "Введите город"; 
-            $replyMarkup= getReplyMarkup($historyKeyboard,$telegram);
+            $replyMarkup= getReplyMarkup($historyKeyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);
             $comandData =  addDataCommand($db, "currentWeather", $chatId);
             addCommand($db, $comandData);
@@ -48,7 +48,7 @@
         {
             removeUserCommand($db, $chatId);
             $reply = "Введите город"; 
-            $replyMarkup= getReplyMarkup($historyKeyboard,$telegram);
+            $replyMarkup= getReplyMarkup($historyKeyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);
             $comandData = addDataCommand($db, "forecastWeather", $chatId);
             addCommand($db, $comandData);
@@ -57,7 +57,7 @@
         {
             refreshCity($db, $chatId);
             $reply = "История успешно очищена";
-            $replyMarkup= getReplyMarkup($keyboard,$telegram);
+            $replyMarkup= getReplyMarkup($keyboard, $telegram);
             replyMessage($chatId, $reply, $replyMarkup, $telegram);         
         }
         else
@@ -67,7 +67,7 @@
                 $getUser = getUserCommand($db, $chatId);
                 if ($getUser) 
                 {
-                    $replyMarkup = getReplyMarkup($keyboard,$telegram);
+                    $replyMarkup = getReplyMarkup($keyboard, $telegram);
                     $userCommand = $getUser['commands'];
                     if ($userCommand == "currentWeather")
                     {

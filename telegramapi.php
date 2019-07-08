@@ -9,7 +9,7 @@ function getTelegramApi(): void
     $telegram -> getWebhookUpdates();
 }
 
-function getText(object $result)
+function getText(object $result): string
 {
     return $result["message"]["text"];
 }
@@ -22,5 +22,10 @@ function getUserId(array $result): int
 function getUserName(array  $result): string
 {
     return  $result["message"]["from"]["username"];
+}
+
+function replyMessage($chatId, $reply, $replyMarkup, $telegram): void
+{
+    $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
 }
 

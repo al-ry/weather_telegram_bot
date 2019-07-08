@@ -7,15 +7,16 @@
     use Telegram\Bot\Api;
 
     $db = initDB();
-    $result = getTelegramApi(); //Передаем в переменную $result полную информацию о сообщении пользовател
+    $telegram = new Api('840599241:AAH6I_Rtq34caNm64rCLJz6mpF0OKHn3iTU'); //Устанавливаем токен, полученный у BotFather
+    $result = $telegram -> getWebhookUpdates(); //Передаем в переменную $result полную информацию о сообщении пользовател
     $text = $result["message"]["text"]; //Текст сообщения
     $chat_id = $result["message"]["chat"]["id"]; //Уникальный идентификатор пользователя
     $name = $result["message"]["from"]["username"]; //Юзернейм пользователя
     $keyboard = [["Текущая погода"],["Прогноз"]];
     $historyKeyboard = [["Удалить историю"]];
-    if($text)
+    if($text) 
     {
-        if ($text == "/start")
+        if ($text == "/start") 
         {
             if (strlen($name) != 0)
             {
@@ -26,7 +27,7 @@
                 $reply = "Привет, незнакомец";
             }
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
+            replyMessage($chat_id, $reply, $reply_markup, $telegram);
         }
         elseif ($text == "/help")
         {
@@ -58,17 +59,6 @@
             $reply = "История успешно очищена";
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
-        }
-        elseif ($text == "Добавить город")
-        {
-            removeUserCommand($db, $chat_id);
-            $reply = "Введите город, который желаете добавить"; 
-            $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply ]);
-            $data = [
-                "commands" => "addCity",
-                "user_id" => $chat_id
-            ];
-            addCommand($db, $data);
         }
         else
         {

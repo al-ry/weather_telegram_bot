@@ -4,7 +4,7 @@ const DB_HOST = 'eu-cdbr-west-02.cleardb.net';
 const DB_USER = 'b06b82c6cf78a6';
 const DB_PASS = 'e0efc55a674f218';
 const DB_NAME = 'heroku_253b17b01e157dc';
-
+const USER_ID = 'user_id';
 
 function initDB(): MysqliDb
 {
@@ -13,7 +13,7 @@ function initDB(): MysqliDb
 
 function removeUserCommand(MysqliDb $db, string $user): void
 {
-    $db->where ("user_id", $user);
+    $db->where (USER_ID, $user);
     $db->delete(DB_NAME . '.bot_commands');
 }
 
@@ -24,15 +24,23 @@ function addCommand(MysqliDb $db, array $data): void
 
 function getUserCommand(MysqliDb $db, string $user): ?array
 {
-    $db->where ("user_id", $user);
+    $db->where (USER_ID, $user);
     return $db->getOne (DB_NAME . ".bot_commands"); 
 }
-
 
 function addDataCommand(MysqliDb $db, string $command, $chat_id): array
 {
     $data = [
         "commands" => $command,
+        "user_id" => $chat_id
+    ];
+    return $data; 
+}
+
+function addDataCity(MysqliDb $db, string $city, $chat_id): array
+{
+    $data = [
+        "city_unique" => $city,
         "user_id" => $chat_id
     ];
     return $data; 
@@ -45,7 +53,7 @@ function addCity(MysqliDb $db, array $data): void
 
 function refreshCity(MysqliDb $db, string $user): void
 {
-    $db->where ("user_id", $user);
+    $db->where (USER_ID, $user);
     $db->delete(DB_NAME . '.city');
 }
 

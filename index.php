@@ -7,7 +7,8 @@
 
     use Telegram\Bot\Api;
 
-
+    const COMMAND_START = "/start";
+    const COMMAND_HELP = "/help";
 
     $db = initDB();
     $telegram = new Api(apiToken); //Устанавливаем токен, полученный у BotFather
@@ -19,7 +20,7 @@
 
     if($text) 
     {
-        if ($text == "/start") 
+        if ($text == COMMAND_START) 
         {
             if (strlen($name) != 0)
             {

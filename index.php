@@ -51,7 +51,7 @@ use Telegram\Bot\Api;
             $reply_markup = $telegram->replyKeyboardMarkup([ 'keyboard' => $historyKeyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
             $telegram->sendMessage([ 'chat_id' => $chat_id, 'text' => $reply, 'reply_markup' => $reply_markup ]);
             $comandData = addDataCommand($db, "forecastWeather", $chat_id);
-            addCommand($db, $comandDat);
+            addCommand($db, $comandData);
         }
         elseif ($text == "Удалить историю")
         {

@@ -3,7 +3,6 @@
     require_once('telegramapi.php');
     require_once('weatherapi.php');
     require_once('database.php');
-    require_once('config.php');
 
     use Telegram\Bot\Api;
 

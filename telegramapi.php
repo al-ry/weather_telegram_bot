@@ -23,12 +23,12 @@ function getUserName(object $result): string
     return $result["message"]["from"]["username"];
 }
 
-function replyMessage($chatId, $reply, $replyMarkup, $telegram): object
+function replyMessage(int $chatId, string $reply, string $replyMarkup, Api $telegram): object
 {
     return $telegram->sendMessage(['chat_id' => $chatId, 'text' => $reply, 'reply_markup' => $replyMarkup]);
 }
 
-function getReplyMarkup($keyboard, $telegram): string
+function getReplyMarkup(string $keyboard, Api $telegram): string
 {
     return $telegram->replyKeyboardMarkup(['keyboard' => $keyboard, 'resize_keyboard' => true, 'one_time_keyboard' => true ]);
 }

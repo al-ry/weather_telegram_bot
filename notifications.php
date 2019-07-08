@@ -1,5 +1,9 @@
 <?php
-
+    include('vendor/autoload.php');
+    require_once('telegramapi.php');
+    require_once('weatherapi.php');
+    require_once('database.php');
+    require_once('notifications.php');
 
 $cityArray =  getLastCity($db, $chatID);
 $cityName = $cityArray['city_unique'];

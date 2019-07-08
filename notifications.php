@@ -5,7 +5,7 @@
     require_once('database.php');
     require_once('notifications.php');
 
-$cityArray =  getLastCity($db, $chatID);
+$cityArray =  getLastCity($db, $chatId);
 $cityName = $cityArray['city_unique'];
 if ($cityArray)
 {

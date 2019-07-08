@@ -101,15 +101,7 @@
     addFavCity($keyboard, $db);
     print_r($keyboard);
     print_r($test);
-
-    function addFavCity(array $keyboard, $db): array 
-    {
-        $db->where ("user_id", 592095051);
-        $test =  $db->getOne (DB_NAME . ".city");
-        $keyboard[] = $test['city_unique'];
-        return $keyboard;
-    }
-
+    
     function getCurrentWeather(string $city): ?string 
     {
         $data = getWeatherData($city); 

@@ -81,8 +81,8 @@
                         $test = $db->getOne (DB_NAME . ".city");
                         $data = [
                             "user_id" => $chatId,
-                            "first_city" =>  $test["second_city"],
-                            "second_city" =>  $test["third_city"],
+                            "first_city" =>  'empty',
+                            "second_city" => 'empty',
                             "third_city" => $text
                         ];
                         addCity($db, $data);
@@ -103,8 +103,8 @@
                         $test = $db->getOne (DB_NAME . ".city");
                         $data = [
                             "user_id" => $chatId,
-                            "first_city" => $test["second_city"],
-                            "second_city" => $test["third_city"],
+                            "first_city" =>  'empty',
+                            "second_city" => 'empty',
                             "third_city" => $text
                         ];
                         addCity($db, $data);

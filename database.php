@@ -39,10 +39,12 @@ function addDataCommand(MysqliDb $db, string $command, $chatId): array
 
 function addDataCity(MysqliDb $db, string $city, int $chatId): array
 {
+    $db->where ("user_id", $chat_id);
+    $test = $db->getOne (DB_NAME . ".city");
     $data = [
         "user_id" => $chatId,
-        "first_city" => $city["second_city"],
-        "second_city" => $city["third_city"],
+        "first_city" =>  $test["second_city"],
+        "second_city" =>  $test["third_city"],
         "third_city" => $city
     ];
     return $data; 

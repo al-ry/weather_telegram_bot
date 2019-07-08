@@ -78,8 +78,10 @@
                     else
                     {
                         $data = [
-                            "city_unique" => $text,
-                            "user_id" => $chatId
+                            "user_id" => $chatId,
+                            "first_city" => $city["second_city"],
+                            "second_city" => $city["third_city"],
+                            "third_city" => $city
                         ];
                         addCity($db, $data);
                         removeUserCommand($db, $chatId);

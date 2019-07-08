@@ -48,6 +48,7 @@ function addDataCity(MysqliDb $db, string $city, int $chatId): array
     return $data; 
 }
 
+
 function addCity(MysqliDb $db, array $data): void
 {
     $db->insert(DB_NAME . '.city', $data);

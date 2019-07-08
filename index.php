@@ -77,10 +77,12 @@
                     }
                     else
                     {
+                        $db->where ("user_id", $chat_id);
+                        $test = $db->getOne (DB_NAME . ".city");
                         $data = [
                             "user_id" => $chatId,
-                            "first_city" => $text["second_city"],
-                            "second_city" => $text["third_city"],
+                            "first_city" =>  $test["second_city"],
+                            "second_city" =>  $test["third_city"],
                             "third_city" => $text
                         ];
                         addCity($db, $data);
@@ -97,10 +99,12 @@
                     }
                     else
                     {
+                        $db->where ("user_id", $chat_id);
+                        $test = $db->getOne (DB_NAME . ".city");
                         $data = [
                             "user_id" => $chatId,
-                            "first_city" => $text["second_city"],
-                            "second_city" => $text["third_city"],
+                            "first_city" => $test["second_city"],
+                            "second_city" => $test["third_city"],
                             "third_city" => $text
                         ];
                         addCity($db, $data);

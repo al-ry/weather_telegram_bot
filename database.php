@@ -60,3 +60,9 @@ function refreshCity(MysqliDb $db, string $user): void
     $db->delete(DB_NAME . '.city');
 }
 
+function getLastCity(MysqliDb $db, string $user): ?array
+{
+    $db->where (USER_ID, $user);
+    return $db->getOne (DB_NAME . ".city");   
+}
+

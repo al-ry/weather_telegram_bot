@@ -63,6 +63,6 @@ function refreshCity(MysqliDb $db, string $user): void
 function getLastCity(MysqliDb $db, string $user): ?array
 {
     $db->where (USER_ID, $user);
-    return $db->getOne (DB_NAME . ".city");   
+    return $db->getOne (DB_NAME . ".");   
 }
 
